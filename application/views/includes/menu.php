@@ -90,7 +90,7 @@
                                 ?>
                                     <li><a class="dropdown-item"  href="<?= base_url('index'); ?>/profile">My account</a></li>
                                     <li><a class="dropdown-item"  href="<?= base_url('index'); ?>/orders">Orders</a></li>
-                                    <li><a class="dropdown-item"  href="<?= base_url('index'); ?>/wishlist">Wishlist</a></li>
+                                    
                                     <!-- <li><a class="dropdown-item" href="#">My consultation</a></li> -->
                                     <li><a class="dropdown-item"  href="<?= base_url('index'); ?>/logout">logout</a></li>
                                 <?php
@@ -148,7 +148,7 @@
                     <!-- Ec Header Search Start -->
                     <div class="align-self-center">
                         <div class="header-search">
-                            <form class="ec-btn-group-form" action="<?= base_url('index/product') ?>" method="post">
+                            <form class="ec-btn-group-form" action="<?= base_url('index/product') ?>" >
                                 <input class="form-control" placeholder="Enter Your Product Name..." type="text" name="searchbox">
                                 <button class="submit" type="submit"><img src="<?= base_url(); ?>assets/img/search.png" class="svg_img header_svg" alt="Vedicos" /></button>
                             </form>
@@ -186,7 +186,7 @@
                                     ?>
                                         <li><a class="dropdown-item"  href="<?= base_url('index'); ?>/profile">My account</a></li>
                                         <li><a class="dropdown-item"  href="<?= base_url('index'); ?>/orders">Orders</a></li>
-                                        <li><a class="dropdown-item"  href="<?= base_url('index'); ?>/wishlist">Wishlist</a></li>
+                                       
                                         <!-- <li><a class="dropdown-item" href="#">My consultation</a></li> -->
                                         <li><a class="dropdown-item"  href="<?= base_url('index'); ?>/logout">logout</a></li>
                                     <?php

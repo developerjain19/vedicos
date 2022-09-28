@@ -58,7 +58,7 @@
                      affiliate: affiliate
                  },
                  success: function(response) {
-                         
+
                      load_product();
                      $('#carttext' + pid).text('Added to cart');
                      setTimeout(function() {
@@ -277,9 +277,12 @@
 
          });
          $(document).on('click', '#withdrawrequest', function() {
+             $("#withdrawrequest").attr('disabled', 'disabled');
+
              var points = $('#pointswithdraw').val();
              var upiid = $('#upiid').val();
-             //  console.log(points);
+
+
              $.ajax({
                  method: "POST",
                  url: "<?= base_url('Index/withdrawrequest') ?>",
@@ -290,6 +293,7 @@
                  success: function(response) {
                      //  console.log(response);
                      alert('Request Made');
+                     $('#withdrawrequest').removeAttr("disabled");
                      window.location = "<?= base_url('Index/profile') ?>";
                  }
              });
@@ -324,8 +328,7 @@
 
                          if (response == '0') {
                              $('#otploginmsg').text('Invalid OTP');
-                         } 
-                         else if (response == '1') {
+                         } else if (response == '1') {
                              $('#otpf').show();
                              $('#getotp').hide();
                              $('#submitlogin').show();
@@ -341,8 +344,7 @@
                                      clearInterval(refreshId);
                                  }
                              }, 1000);
-                         } 
-                         else {
+                         } else {
                              $('#otploginmsg').text('Please register with us to continue');
                          }
                          $("#getotp").text("Get OTP").attr('disabled', false);
@@ -571,7 +573,7 @@
 
 
                      $('#grand_total').val(((parseInt(tamt) - (parseInt(obj[0]['deduction']) + parseInt(referalpoint))) + parseFloat(sc)).toFixed(2));
-                 } 
+                 }
              }
          });
      }
@@ -606,7 +608,7 @@
              url: '<?= base_url("Index/cartweight") ?>',
              method: 'POST',
              success: function(response) {
-                // console.log(response);
+                 // console.log(response);
                  $('#weight').val(response);
 
              }
@@ -687,7 +689,9 @@
 
      });
 
-     function ship_char(pincode, weight) {
+     function ship_char(pincode, weight, totalamt, minshipamt) {
+        //  console.log(totalamt);
+        //  console.log(minshipamt);
          $.ajax({
              method: "POST",
              dataType: "json",
@@ -699,17 +703,33 @@
              success: function(response) {
                  if (response == '') {
                      $("#shipping_charges").val('0');
-                     $("#placeorder").attr('disabled',true);
+                    // $("#placeorder").attr('disabled',true);
                      $(".shipping_charge").html('Enter Valid Pincode');
                      $("#courier_id").val();
-                     
+
                      $("#placeorder_msg").text('Pincode not allowed');
                  } else {
-                     $(".shipping_charge").html('Rs. ' + response.rate);
-                     $("#courier_id").val(response.courier_id);
-                     $("#shipping_charges").val(response.rate);
-                     $("#placeorder").attr('disabled',false);
-                     $("#placeorder_msg").text('');
+                     // get minimum amount
+                     // check total amt > minimum amt
+                     // add class strike shipping price
+                     // text show free delivery
+                     // add field in form - free_delivery in checkout table
+                     // assign 1 for free delivery
+                     // else 
+
+
+                     if (totalamt >= minshipamt) {
+                         $(".shipping_charge").html('Rs. ' + response.rate);
+                         $(".shipping_charge").addClass("strike");
+                         $(".shipping_msg").html('Free Delivery');
+                         $("#placeorder").attr('disabled', false);
+                     } else {
+                         $(".shipping_charge").html('Rs. ' + response.rate);
+                         $("#courier_id").val(response.courier_id);
+                         $("#shipping_charges").val(response.rate);
+                         $("#placeorder").attr('disabled', false);
+                         $("#placeorder_msg").text('');
+                     }
                  }
                  load_checkoutbar();
                  promo();
@@ -720,20 +740,25 @@
      shipp();
      //  ship_char();
      $('#pincode').keyup(function() {
-        shipp();
+         shipp();
      });
      $(".shipping_charge_cost").val('0');
      $(".shipping_charge").html('Enter Pincode');
-     $("#placeorder").attr('disabled',true);
-     function shipp(){
-          var pincode = $("#pincode").val();
+     $("#placeorder").attr('disabled', true);
+
+     function shipp() {
+         var pincode = $("#pincode").val();
          var weight = $("#weight").val();
+         var totalamt = $('#totalamount').val();
+         var minshipamt = $('#minshipamt').val();
+
+
+
          if (pincode.length == 6) {
-             var df = ship_char(pincode, weight);
+             var df = ship_char(pincode, weight, totalamt, minshipamt);
          } else {
              $(".shipping_charge_cost").val('0');
              $(".shipping_charge").html('Enter Valid Pincode');
          }
      }
-     
  </script>

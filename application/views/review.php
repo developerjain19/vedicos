@@ -53,7 +53,7 @@
                                                 <label for="rating-1"></label>
                                                 <input type="radio" name="rating" id="rating-2" value="4">
                                                 <label for="rating-2"></label>
-                                                <input type="radio" name="rating" id="rating-3" value="3" checked>
+                                                <input type="radio" name="rating" id="rating-3" value="3">
                                                 <label for="rating-3"></label>
                                                 <input type="radio" name="rating" id="rating-4" value="2">
                                                 <label for="rating-4"></label>
@@ -76,7 +76,7 @@
 
 
                                     <span class=" col-md-12">
-                                        <label>How do you ke the Product?*</label>
+                                        <label>How do you like the Product?*</label>
                                         <textarea name="message" class="form-control" id="message" cols="30" rows="4" placeholder="Write message" required data-error="Write your message"></textarea>
 
                                     </span>

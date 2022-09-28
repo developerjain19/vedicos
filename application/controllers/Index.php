@@ -105,7 +105,7 @@ class Index extends CI_Controller
     public function sendotponlogin()
     {
         $contact = $this->input->post('logincontact');
-        $otp =   rand(11111, 9999999);
+        $otp =  rand(1000, 10000);
 
         $data = $this->CommonModal->getNumRows('user_registration', array('contact' => $contact));
 
@@ -113,9 +113,12 @@ class Index extends CI_Controller
             echo '2';
         } elseif ($data == 1) {
             $this->session->set_userdata('otp', $otp);
-            sendOTP($contact, $otp . ' is your One Time Password (OTP) to verify your phone number with Edusol App. Thanks EDUSOL (Ekaum Enterprises)');
+            // sendOTP($contact, $otp . ' is your One Time Password (OTP) to verify your phone number with Edusol App. Thanks EDUSOL (Ekaum Enterprises)');
+
             $debug = true;
+
             $msg = "Your otp is " . $otp . " to verify your Vedicos account. Pl don't share this to anyone else. Thanks Team Vedicos";
+
             SMSSend($contact, $msg, '1707165224789163217', $debug);
 
 
@@ -130,11 +133,18 @@ class Index extends CI_Controller
     public function resendotp()
     {
         $contact = $this->input->post('vid');
-        $otp =   rand(11111, 9999999);
+        $otp =  rand(1000, 10000);
 
 
         $this->session->set_userdata('otp', $otp);
-        sendOTP($contact, $otp . ' is your One Time Password (OTP) to verify your phone number with Edusol App. Thanks EDUSOL (Ekaum Enterprises)');
+        // sendOTP($contact, $otp . ' is your One Time Password (OTP) to verify your phone number with Edusol App. Thanks EDUSOL (Ekaum Enterprises)');
+
+        $debug = true;
+
+        $msg = "Your otp is " . $otp . " to verify your Vedicos account. Pl don't share this to anyone else. Thanks Team Vedicos";
+
+        SMSSend($contact, $msg, '1707165224789163217', $debug);
+
         echo '1';
 
 
@@ -144,11 +154,18 @@ class Index extends CI_Controller
     public function loginresendotp()
     {
         $contact = $this->input->post('vid');
-        $otp =   rand(11111, 9999999);
+        $otp =  rand(1000, 10000);
 
 
         $this->session->set_userdata('otp', $otp);
-        sendOTP($contact, $otp . ' is your One Time Password (OTP) to verify your phone number with Edusol App. Thanks EDUSOL (Ekaum Enterprises)');
+        // sendOTP($contact, $otp . ' is your One Time Password (OTP) to verify your phone number with Edusol App. Thanks EDUSOL (Ekaum Enterprises)');
+
+        $debug = true;
+
+        $msg = "Your otp is " . $otp . " to verify your Vedicos account. Pl don't share this to anyone else. Thanks Team Vedicos";
+
+        SMSSend($contact, $msg, '1707165224789163217', $debug);
+
         echo '1';
 
 
@@ -176,9 +193,17 @@ class Index extends CI_Controller
                     $regdataemail = $this->CommonModal->getRowById('user_registration', 'emailid', $formdata['emailid']);
                     if (empty($regdataemail)) {
                         $formdata['my_ref_code'] = $this->input->post('fullname');
-                        $formdata['otp'] =   rand(11111, 9999999);
+                        $formdata['otp'] =  rand(1000, 10000);
                         $lig = $this->CommonModal->insertRowReturnId($table, $formdata);
-                        sendOTP($formdata['contact'], $formdata['otp'] . ' is your One Time Password (OTP) to verify your phone number with Edusol App. Thanks EDUSOL (Ekaum Enterprises)');
+                        // sendOTP($formdata['contact'], $formdata['otp'] . ' is your One Time Password (OTP) to verify your phone number with Edusol App. Thanks EDUSOL (Ekaum Enterprises)');
+
+
+                        $debug = true;
+
+                        $msg = "Your otp is " . $formdata['otp'] . " to verify your Vedicos account. Pl don't share this to anyone else. Thanks Team Vedicos";
+
+                        SMSSend($formdata['contact'], $msg, '1707165224789163217', $debug);
+
                         // print_r($formdata);
                         $this->session->set_userdata(array('otp' => $formdata['otp'], 'login_user_name' => $formdata['fullname'],  'login_user_contact' => $formdata['contact'],  'login_user_otp_id' => $lig));
                         redirect(base_url('index/phoneverification'));
@@ -205,7 +230,7 @@ class Index extends CI_Controller
             // $this->session->set_userdata('msg', 'You have registered successfully. check mail ID to get your password.');
 
 
-            // redirect('index/login');
+            // redirect('index');
         } else {
             $data['title'] = 'Vedicos | User Registeration';
             $data['logo'] = 'assets/images/logo.png';
@@ -307,11 +332,21 @@ class Index extends CI_Controller
     }
     public function product()
     {
-        $categoryid = $this->uri->segment(3);
-        $data['categoryid'] = $this->uri->segment(3);
-        $subcategoryid = $this->uri->segment(4);
-        $data['subcategoryid'] = $this->uri->segment(4);
+
+
+        $cateid = $this->input->get('category');
+        $data['cateid'] = base64_decode($cateid);
+
+        $data['search'] = $this->input->get('searchbox');
+
+        $subcate  = $this->input->get('subcate');
+        $data['subcateid'] = base64_decode($subcate);
+
+
         $data['category'] = $this->CommonModal->getAllRowsInOrder('category', 'category_id', 'desc');
+        $data['sidecategory'] = $this->CommonModal->getAllRowsInOrder('category', 'category_id', 'ASC');
+        $data['subcategory'] = $this->CommonModal->getAllRowsInOrder('sub_category', 'cat_id', 'desc');
+
         $data['rate'] = $this->CommonModal->getRowById('quicklink', 'id', '1');
 
         $data['contactdetails'] = $this->CommonModal->getRowById('contactdetails', 'cid', '1');
@@ -319,20 +354,59 @@ class Index extends CI_Controller
             extract($this->input->post());
             $table = "products";
             $data['products'] = $this->Dashboard_model->fetchbysearch($table, $searchbox);
-        } else {
-            if ($subcategoryid != '') {
-                $data['products'] = $this->CommonModal->getRowById('products', 'subcategory_id', $subcategoryid);
-            } elseif ($categoryid != '') {
-                $data['products'] = $this->CommonModal->getRowById('products', 'category_id', $categoryid);
-            } else {
-                $data['products'] = $this->Dashboard_model->fetchlimit('products');
-            }
-            $data['subcategory'] = $this->CommonModal->getRowById('sub_category', 'cat_id', $categoryid);
         }
 
         $data['title'] = 'Vedicos | Our product';
         $data['logo'] = 'assets/images/logo.png';
         $this->load->view('collection', $data);
+    }
+
+    public function getProduct()
+    {
+        $categoryid = $this->input->post('catid');
+        $subcategoryid = $this->input->post('subcatid');
+        $limit = $this->input->post('limit');
+        $offset = $this->input->post('offset');
+        if ($subcategoryid != '') {
+            echo json_encode($this->CommonModal->getDataByIdInOrderLimit('products', array('subcategory_id' => $subcategoryid), 'product_id', 'desc', $limit, $offset));
+        } elseif ($categoryid != '') {
+            echo json_encode($this->CommonModal->getDataByIdInOrderLimit('products', array('category_id' => $categoryid), 'product_id', 'desc', $limit, $offset));
+        } else {
+            echo json_encode($this->CommonModal->getAllDataWithLimitInOrder('products', 'product_id', 'desc', $limit, $offset));
+        }
+    }
+
+
+    public function filterData()
+    {
+        // print_r($_POST);
+
+        $search = ((isset($_POST['search'])) ? $_POST['search'] : '');
+        $category = ((isset($_POST['category'])) ? $_POST['category'] : '');
+        $subcategory = ((isset($_POST['subcategory'])) ? $_POST['subcategory'] : '');
+        $query = "SELECT * FROM `products` WHERE `status` = '0'";
+        if (($search != '')  || ($category != '') || ($subcategory != '')) {
+
+            if ($search != '') {
+
+                $query .= " AND `pro_name` LIKE '%" . trim($search) . "%'  OR `price` LIKE '%" . trim($search) . "%' OR `description` LIKE '%" . trim($search) . "%'  ";
+            }
+
+            if ($category != '') {
+                $cate = implode("','", $category);
+                $query .= " AND category_id IN('" . $cate . "')";
+            }
+
+            if ($subcategory != '') {
+                $subcate = implode("','", $subcategory);
+                $query .= " AND subcategory_id IN('" . $subcate . "')";
+            }
+        }
+
+        //   print_r($query);
+        $data['all_data'] = $this->CommonModal->runQuery($query);
+
+        $this->load->view('get_product', $data);
     }
 
     public function deals()
@@ -428,13 +502,14 @@ class Index extends CI_Controller
         } else {
             $data['login'] = $this->CommonModal->getRowById('user_registration', 'reg_id', $this->session->userdata('login_user_id'));
         }
-
         $data['category'] = $this->CommonModal->getAllRowsInOrder('category', 'category_id', 'desc');
         $data['rate'] = $this->CommonModal->getRowById('quicklink', 'id', '1');
+        $data['freeship'] = $this->CommonModal->getRowById('free_shipping', 'fid', '1');
         $data['contactdetails'] = $this->CommonModal->getRowById('contactdetails', 'cid', '1');
         $data['old_checkout'] = $this->CommonModal->getSingleRowById('checkout', array('user_id' => $this->session->userdata('login_user_id')));
         $data['state_list'] = $this->CommonModal->getAllRows('state_list');
-
+        $data['pointDetails'] = $this->CommonModal->getRowById('affliate_purchase', 'user_id', $this->session->userdata('login_user_id'));
+        $data['orderDetails'] = $this->CommonModal->getRowById('checkout', 'user_id', $this->session->userdata('login_user_id'));
         $data['title'] = 'Vedicos | Add to cart';
         $data['logo'] = 'assets/images/logo.png';
         $this->load->view('add_to_cart', $data);
@@ -442,7 +517,7 @@ class Index extends CI_Controller
     public function profile()
     {
         if (!$this->session->has_userdata('login_user_id')) {
-            redirect('index/login');
+            redirect('index');
         }
 
         $data['category'] = $this->CommonModal->getAllRowsInOrder('category', 'category_id', 'desc');
@@ -453,10 +528,21 @@ class Index extends CI_Controller
         $data['login_user'] = $this->session->userdata();
         // print_r($this->session->userdata);  exit;
         $data['wishList'] = $this->CommonModal->getRowById('products_wishlist', 'user_id', $this->session->userdata('login_user_id'));
+
+
         $data['orderDetails'] = $this->CommonModal->getRowById('checkout', 'user_id', $this->session->userdata('login_user_id'));
+
+
         $data['profiledata'] = $this->CommonModal->getRowById('user_registration', 'reg_id', $this->session->userdata('login_user_id'));
         $data['pointDetails'] = $this->CommonModal->getRowById('affliate_purchase', 'user_id', $this->session->userdata('login_user_id'));
-        // $data['pointDetails'] = $this->CommonModal->getRowById('referal_amt', 'referal_id', $this->session->userdata('my_ref_code'));
+
+        //          print_r($this->session->userdata('login_user_id'));
+        // exit();
+
+        $data['withdraw_request'] = $this->CommonModal->getRowByIdInOrder('affiliate_withdraw', array('user_id' => $this->session->userdata('login_user_id')), 'id', 'DESC');
+
+
+
         if (count($_POST) > 0) {
             $formdata = $this->input->post();
             if ($formdata['user_type'] == '1') {
@@ -496,7 +582,7 @@ class Index extends CI_Controller
     public function orders()
     {
         if (!$this->session->has_userdata('login_user_id')) {
-            redirect('index/login');
+            redirect('index');
         }
 
         $data['category'] = $this->CommonModal->getAllRowsInOrder('category', 'category_id', 'desc');
@@ -504,7 +590,9 @@ class Index extends CI_Controller
         $data['contactdetails'] = $this->CommonModal->getRowById('contactdetails', 'cid', '1');
 
         $data['login_user'] = $this->session->userdata();
-        $data['orderDetails'] = $this->CommonModal->getRowById('checkout', 'user_id', $this->session->userdata('login_user_id'));
+        // $data['orderDetails'] = $this->CommonModal->getRowById('checkout', 'user_id', $this->session->userdata('login_user_id'));
+        // $data['orderDetails'] = $this->CommonModal->getRowByIdInOrder('checkout', 'user_id', $this->session->userdata('login_user_id'), 'dsc');
+        $data['orderDetails'] = $this->CommonModal->getRowByIdInOrder('checkout', array('user_id' => $this->session->userdata('login_user_id')), 'id', 'desc');
 
         $data['title'] = 'Vedicos | Profile';
         $data['logo'] = 'assets/images/logo.png';
@@ -534,7 +622,7 @@ class Index extends CI_Controller
     public function wishlist()
     {
         if (!$this->session->has_userdata('login_user_id')) {
-            redirect('index/login');
+            redirect('index');
         }
         $data['category'] = $this->CommonModal->getAllRowsInOrder('category', 'category_id', 'desc');
         $data['rate'] = $this->CommonModal->getRowById('quicklink', 'id', '1');
@@ -549,7 +637,7 @@ class Index extends CI_Controller
     public function orderDetails()
     {
         if (!$this->session->has_userdata('login_user_id')) {
-            redirect('index/login');
+            redirect('index');
         }
         $checkoutID = $this->uri->segment(3);
         $data['category'] = $this->CommonModal->getAllRowsInOrder('category', 'category_id', 'desc');
@@ -566,7 +654,7 @@ class Index extends CI_Controller
     public function orderInvoice()
     {
         if (!$this->session->has_userdata('login_user_id')) {
-            redirect('index/login');
+            redirect('index');
         }
         $checkoutID = $this->uri->segment(3);
         $data['category'] = $this->CommonModal->getAllRowsInOrder('category', 'category_id', 'desc');
@@ -598,38 +686,47 @@ class Index extends CI_Controller
     {
         if (count($_POST) > 0) {
 
-            $profiledata = $this->CommonModal->getRowById('user_registration', 'reg_id', $this->session->userdata('login_user_id'));
-            echo '<pre>';
-            $postdata = $this->input->post();
-            // print_r($postdata);
-            // print_r($profiledata);
+            $this->form_validation->set_rules('name', 'Name', 'required');
+            $this->form_validation->set_rules('email', 'Email', 'required');
+            $this->form_validation->set_rules('number', 'Number', 'required');
+            $this->form_validation->set_rules('address', 'Address', 'required');
+            $this->form_validation->set_rules('pincode', 'Pincode', 'required');
+            $this->form_validation->set_rules('city', 'City', 'required');
+            $this->form_validation->set_rules('state', 'State', 'required');
+            $this->form_validation->set_rules('country', 'Country', 'required');
 
-            $point = 0;
-            $minimumpv = 0;
-            if ($profiledata[0]['user_type'] == '0') {
-                // echo 'normal';
-                $referal_per = $this->CommonModal->getRowById('referal_per', 'id', '1');
-                if ($postdata['totalreferalpoint'] >= $referal_per[0]['minimum_point']) {
-                    $point = (int)$this->cart->total() * ($referal_per[0]['minimum_value'] / 100);
+            if ($this->form_validation->run() !== FALSE) {
 
+                $profiledata = $this->CommonModal->getRowById('user_registration', 'reg_id', $this->session->userdata('login_user_id'));
+                echo '<pre>';
+                $postdata = $this->input->post();
+
+                $point = 0;
+                $minimumpv = 0;
+                if ($profiledata[0]['user_type'] == '0') {
+                    // echo 'normal';
+                    $referal_per = $this->CommonModal->getRowById('referal_per', 'id', '1');
+                    if ($postdata['totalreferalpoint'] >= $referal_per[0]['minimum_point']) {
+                        $point = (int)$this->cart->total() * ($referal_per[0]['minimum_value'] / 100);
+
+                        $postdata['referalpoint'] = $point;
+                    }
+                } elseif ($profiledata[0]['user_type'] == '1') {
+                    // echo 'premium';
+                    $referal_per = $this->CommonModal->getRowById('referal_per', 'id', '2');
+                    if ($postdata['totalreferalpoint'] >= $referal_per[0]['minimum_point']) {
+                        $point = (int)$this->cart->total() * ($referal_per[0]['minimum_value'] / 100);
+
+                        $postdata['referalpoint'] = $point;
+                    }
+                } else {
                     $postdata['referalpoint'] = $point;
                 }
-            } elseif ($profiledata[0]['user_type'] == '1') {
-                // echo 'premium';
-                $referal_per = $this->CommonModal->getRowById('referal_per', 'id', '2');
-                if ($postdata['totalreferalpoint'] >= $referal_per[0]['minimum_point']) {
-                    $point = (int)$this->cart->total() * ($referal_per[0]['minimum_value'] / 100);
+                // print_r($postdata);
+                // exit();
 
-                    $postdata['referalpoint'] = $point;
-                }
-            } else {
-                $postdata['referalpoint'] = $point;
+                $post = $this->CommonModal->insertRowReturnId('checkout', $postdata);
             }
-            // print_r($postdata);
-            // exit();
-
-            $post = $this->CommonModal->insertRowReturnId('checkout', $postdata);
-
 
             foreach ($this->cart->contents() as $items) :
                 $product = array('checkoutid' => $post, 'product_id' => $items['id'], 'product_img' => $items['image'], 'product_name' => $items['name'], 'product_price' => $items['price'], 'product_quantity' => $items['qty'], 'affiliate' => $items['affiliate'], 'total_pro_amt' => ($items['price'] * $items['qty']));
@@ -640,6 +737,7 @@ class Index extends CI_Controller
                         if ($refdata[0]['premium'] == 0) {
                             $referal_per = $this->CommonModal->getRowById('referal_per', 'id', '1');
                             $amt = ((int)$items['price'] * (int)$items['qty']) * ($referal_per[0]['percen'] / 100);
+
                             $this->CommonModal->insertRowReturnId('affliate_purchase', array('user_id' => $items['affiliate'], 'product_id' => $items['id'], 'checkoutid' => $post, 'amount' => $items['price'], 'percentage' => $referal_per[0]['percen'], 'ref_amt' => $amt));
                         } else {
                             $referal_per = $this->CommonModal->getRowById('referal_per', 'id', '2');
@@ -765,7 +863,7 @@ class Index extends CI_Controller
         $msg = '';
         $msg .= "<h4>Thank you for shopping on Vedicos. We're prepping your order with Vedicos Ayur-products.</h4>";
         $msg .= "<br/>";
-        $msg .= "Till then happy shopping 🙂 - Team Vedicos.";
+        $msg .= "Till then happy shopping - Team Vedicos.";
 
         $msg .= "<p>Transaction ID: " . $this->session->flashdata('razorpay_payment_id') . '</p>';
         $msg .= "<br/>";
@@ -801,9 +899,9 @@ class Index extends CI_Controller
         $msg = '';
         $msg .= "<h4>Thank you for shopping on Vedicos.</h4>";
         $msg .= "<br/>";
-        $msg .= "<h4>Thank you for shopping on Vedicos. We're prepping your order with Vedicos Ayur-products.</h4>";
+        $msg .= "<h4>We're prepping your order with Vedicos Ayur-products.</h4>";
         $msg .= "<br/>";
-        $msg .= "Till then happy shopping 🙂 - Team Vedicos.";
+        $msg .= "<h4>Till then happy shopping 🙂 - Team Vedicos.</h4>";
         $data['message'] = $msg;
         $this->load->view('payment_msg', $data);
     }
@@ -833,7 +931,7 @@ class Index extends CI_Controller
         $data['rate'] = $this->CommonModal->getRowById('quicklink', 'id', '1');
         $data['contactdetails'] = $this->CommonModal->getRowById('contactdetails', 'cid', '1');
         $data['logo'] = 'assets/images/logo.png';
-        $data['title'] = 'Disclaimer | Vedicos';
+        $data['title'] = 'Cart List | Vedicos';
 
         $this->load->view('cart_list', $data);
     }
@@ -931,20 +1029,7 @@ class Index extends CI_Controller
         echo $w;
     }
 
-    public function getProduct()
-    {
-        $categoryid = $this->input->post('catid');
-        $subcategoryid = $this->input->post('subcatid');
-        $limit = $this->input->post('limit');
-        $offset = $this->input->post('offset');
-        if ($subcategoryid != '') {
-            echo json_encode($this->CommonModal->getDataByIdInOrderLimit('products', array('subcategory_id' => $subcategoryid), 'product_id', 'desc', $limit, $offset));
-        } elseif ($categoryid != '') {
-            echo json_encode($this->CommonModal->getDataByIdInOrderLimit('products', array('category_id' => $categoryid), 'product_id', 'desc', $limit, $offset));
-        } else {
-            echo json_encode($this->CommonModal->getAllDataWithLimitInOrder('products', 'product_id', 'desc', $limit, $offset));
-        }
-    }
+
     public function checkPromo()
     {
         $promocode = $this->input->post('promocode');
@@ -1134,13 +1219,21 @@ class Index extends CI_Controller
                 echo '<pre>';
                 // print_r($formdata);
                 $formdata['my_ref_code'] = $this->input->post('fullname');
-                $formdata['otp'] =   rand(11111, 9999999);
+                $formdata['otp'] =  rand(1000, 10000);
                 $formdata['profile'] = imageUpload('image', 'uploads/user/');
                 $formdata['degreedoc'] = imageUpload('degreedoc', 'uploads/user/');
                 $formdata['identitydoc'] = imageUpload('identitydoc', 'uploads/user/');
                 // print_r($formdata);exit();
                 $lig = $this->CommonModal->insertRowReturnId($table, $formdata);
-                sendOTP($formdata['contact'], $formdata['otp'] . ' is your One Time Password (OTP) to verify your phone number with Edusol App. Thanks EDUSOL (Ekaum Enterprises)');
+                // sendOTP($formdata['contact'], $formdata['otp'] . ' is your One Time Password (OTP) to verify your phone number with Edusol App. Thanks EDUSOL (Ekaum Enterprises)');
+
+                $debug = true;
+
+                $msg = "Your otp is " . $formdata['otp'] . " to verify your Vedicos account. Pl don't share this to anyone else. Thanks Team Vedicos";
+
+                SMSSend($formdata['contact'], $msg, '1707165224789163217', $debug);
+
+
                 // print_r($formdata);
                 $this->session->set_userdata(array('otp' => $formdata['otp'], 'login_user_name' => $formdata['fullname'],  'login_user_contact' => $formdata['contact'],  'login_user_otp_id' => $lig));
 
@@ -1201,5 +1294,15 @@ class Index extends CI_Controller
     {
         $token = generateToken();
         echo $token;
+    }
+
+    public function testotp()
+    {
+
+        $debug = true;
+
+        $msg = "Your otp is 78956 to verify your Vedicos account. Pl don't share this to anyone else. Thanks Team Vedicos";
+
+        SMSSend('8319218133', $msg, '1707165224789163217', $debug);
     }
 }

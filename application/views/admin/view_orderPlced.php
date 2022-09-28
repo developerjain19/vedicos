@@ -84,7 +84,18 @@
                                                         <!-- <td><?php echo wordwrap($row['address'], 20, '<br>'); ?></td> -->
                                                         <td> Rs. <?php echo $row['grand_total']; ?><br><span class="text-secondary">( <?php echo (($row['payment_type'] == '1') ? 'Online Payment' : 'COD'); ?> )</span></td>
                                                         <td><a href="<?php echo base_url() . 'admin_Dashboard/OrderPlacedDetails/' . $row['id']; ?>" class="btn btn-danger  "><i class="fas fa-eye"></i></a></td>
-                                                        <td><?php
+                                                        <td>
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        <?php if($row['status'] == 2) {  ?>
+                                                        
+                                                        
+                                                        
+                                                <?php  } else {        ?>
+                                                        
+                                                        <?php
                                                             if ($row['awb_assign_status'] == 1) {
                                                             ?>
                                                                 <a href="<?php echo base_url() . 'admin_Dashboard/shiporder_track/' . $row['id']; ?>" class="btn btn-danger  "> Shiprocket</a>
@@ -94,6 +105,7 @@
                                                                 <a href="<?php echo base_url() . 'admin_Dashboard/shiporder/' . $row['id']; ?>" class="btn btn-danger  "> Shiprocket</a>
                                                             <?php
                                                             }
+                                                }
                                                             ?>
                                                         </td>
                                                         <td>
@@ -133,11 +145,26 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <button type="button" class="btn btn-<?= (($row['status'] == 0) ? 'info' : (($row['status'] == 1) ? 'warning' : (($row['status'] == 2) ? 'danger' : (($row['status'] == 3) ? 'success' : (($row['status'] == '4') ? 'warning' : (($row['status'] == '5') ? 'info' : (($row['status'] == '6') ? 'info' : (($row['status'] == '7') ? 'secondary' : (($row['status'] == '8') ? 'warning' :(($row['status'] == '9') ? 'warning' : '')))))))))) ?>" data-toggle="modal" data-target="#exampleModal<?= $row['id'] ?>">
 
-                                                                <?php echo (($row['status'] == '0') ? 'New order' : (($row['status'] == '1') ? 'On process' : (($row['status'] == '2') ? 'Cancel requested' : (($row['status'] == '3') ? 'Order delivered' : (($row['status'] == '4') ? 'Cancelled and refunded' : (($row['status'] == '5') ? 'Shipment' : (($row['status'] == '6') ? 'On the way' : (($row['status'] == '7') ? 'Order Cancelled' : (($row['status'] == '8') ? 'Request for return' :(($row['status'] == '9') ? 'Order return initiated' : '')))))))))); ?>
+
+                                                        <?php if($row['status'] != 2) {  ?>
+
+                                                            <button type="button" class="btn btn-<?= (($row['status'] == 0) ? 'info' : (($row['status'] == 1) ? 'warning' :  (($row['status'] == 3) ? 'success' : (($row['status'] == '4') ? 'warning' : (($row['status'] == '5') ? 'info' : (($row['status'] == '6') ? 'info' : (($row['status'] == '7') ? 'secondary' : (($row['status'] == '8') ? 'warning' :(($row['status'] == '9') ? 'warning' : ''))))))))) ?>" data-toggle="modal" data-target="#exampleModal<?= $row['id'] ?>">
+
+                                                                <?php echo (($row['status'] == '0') ? 'New order' : (($row['status'] == '1') ? 'On process'  : (($row['status'] == '3') ? 'Order delivered' : (($row['status'] == '4') ? 'Cancelled and refunded' : (($row['status'] == '5') ? 'Shipment' : (($row['status'] == '6') ? 'On the way' : (($row['status'] == '7') ? 'Order Cancelled' : (($row['status'] == '8') ? 'Request for return' :(($row['status'] == '9') ? 'Order return initiated' : ''))))))))); ?>
 
                                                             </button>
+
+                                                            <?php
+                                                                }
+                                                                else
+                                                                { ?>
+
+                                                                    <button type="button" class="btn btn-danger">   
+                                                                    Order Cancelled 
+                                                                    </button>
+                                                                    
+                                                                <?php }  ?>
 
                                                         </td>
 

@@ -14,9 +14,6 @@
 <body>
 
     <?php include('includes/menu.php'); ?>
-
-
-    <!-- Ec breadcrumb start -->
     <div class="sticky-header-next-sec  ec-breadcrumb section-space-mb">
         <div class="container">
             <div class="row">
@@ -42,18 +39,18 @@
 
     <div class="product-details-area ptb-100">
         <div class="container">
-            <p class="text text-warning"><?php
-                                            if ($this->session->has_userdata('msg')) {
-                                                echo $this->session->userdata('msg');
-                                                $this->session->unset_userdata('msg');
-                                            }
-                                            ?>
+            <p class="text text-warning">
+                <?php
+                if ($this->session->has_userdata('msg')) {
+                    echo $this->session->userdata('msg');
+                    $this->session->unset_userdata('msg');
+                }
+                ?>
             </p>
             <?php
 
             if (!empty($orderDetails)) {
                 foreach ($orderDetails as $row) {
-                    // print_r($row);
             ?>
                     <div class="card m-3">
                         <div class="card-body shadow">
@@ -112,10 +109,14 @@
                                                                 <span> <b>
                                                                         Total - Rs. <?= ($productRow['product_price'] * $productRow['product_quantity']); ?> /- </b></span>
                                                             </div>
-                                                            <div class="col-md-2">
-                                                                <a class="badge p-1 badge-secondary" href="<?= base_url('Index/product_review/' . $productRow['product_id']) ?>" data-id="<?= $productRowData['product_id'] ?>">Add Review</a>
-                                                            </div>
 
+                                                            <?php if ($row['status'] == '3') { ?>
+                                                                <div class="col-md-2">
+                                                                    <a class="badge p-1 badge-secondary" href="<?= base_url('Index/product_review/' . $productRow['product_id']) ?>" data-id="<?= $productRowData['product_id'] ?>">Add Review</a></div>
+
+                                                                <?php
+                                                            }
+                                                                ?>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -131,7 +132,11 @@
 
                                     Order Status - <br>
                                     <p class=" badge p-1 badge-<?= (($row['status'] == 0) ? 'info' : (($row['status'] == 1) ? 'warning' : (($row['status'] == 2) ? 'danger' : (($row['status'] == 3) ? 'success' : (($row['status'] == '4') ? 'warning' : (($row['status'] == '5') ? 'info' : (($row['status'] == '6') ? 'info' : (($row['status'] == '7') ? 'secondary' : (($row['status'] == '8') ? 'warning' : (($row['status'] == '9') ? 'warning' : '')))))))))) ?>  ">
-                                        <?php echo (($row['status'] == '0') ? 'New order' : (($row['status'] == '1') ? 'On process' : (($row['status'] == '2') ? 'Cancel requested' : (($row['status'] == '3') ? 'Order delivered' : (($row['status'] == '4') ? 'Cancelled and refunded' : (($row['status'] == '5') ? 'Shipment' : (($row['status'] == '6') ? 'On the way' : (($row['status'] == '7') ? 'Order Cancelled' : (($row['status'] == '8') ? 'Request for return' : (($row['status'] == '9') ? 'Order return initiated' : '')))))))))); ?>
+
+
+                                        <?php echo (($row['status'] == '0') ? 'New order' : (($row['status'] == '1') ? 'On process' : (($row['status'] == '2') ? 'Canceled ' : (($row['status'] == '3') ? 'Order delivered' : (($row['status'] == '4') ? 'Cancelled and refunded' : (($row['status'] == '5') ? 'Shipment' : (($row['status'] == '6') ? 'On the way' : (($row['status'] == '7') ? 'Order Cancelled' : (($row['status'] == '8') ? 'Request for return' : (($row['status'] == '9') ? 'Order return initiated' : '')))))))))); ?>
+
+
                                     </p><br>
                                     More Actions -<br>
                                     <a href="<?= base_url('index/orderDetails/' . $row['id']) ?>" class="badge p-1 badge-primary"> All Details</a>
@@ -183,21 +188,24 @@
         $('.cancelpro').click(function() {
             var id = $(this).data('id');
             console.log(id);
-            $.ajax({
-                method: "POST",
-                url: "<?= base_url('Index/cancelorder') ?>",
-                data: {
-                    id: id
-                },
-                success: function(response) {
-                    console.log(response);
-                    if (response == '0') {
-                        history.go(0);
-                    } else {
-                        alert('Not applicable');
+
+            if (confirm("Are you sure you want to cancel the order")) {
+                $.ajax({
+                    method: "POST",
+                    url: "<?= base_url('Index/cancelorder') ?>",
+                    data: {
+                        id: id
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        if (response == '0') {
+                            history.go(0);
+                        } else {
+                            alert('Not applicable');
+                        }
                     }
-                }
-            });
+                });
+            }
         });
         $('.returnpro').click(function() {
             var id = $(this).data('id');

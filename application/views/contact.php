@@ -69,7 +69,7 @@
                                     </span>
 
                                     <span class="ec-contact-wrap ec-contact-btn">
-                                        <button class="btn btn-primary" type="submit">Submit</button>
+                                        <button class="st_btn_register" style="border-radius: 3px; padding: 4px 0;" type="submit">Submit</button>
                                     </span>
                                 </form>
                             </div>

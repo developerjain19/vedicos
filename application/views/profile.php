@@ -1,3 +1,28 @@
+ <?php
+$rp = 0;
+if (!empty($pointDetails)) {
+    foreach ($pointDetails as $pp) {
+$getcheck =  getRowById('checkout' , 'id' , $pp['checkoutid']);
+$pdate =   date('Y-m-d', strtotime($getcheck[0]['create_date']. ' + 14 day'));
+$cudate = date('Y-m-d');
+ if(($getcheck[0]['status'] == 3) && ($pdate > $cudate))
+ {
+    $rp += $pp['ref_amt'];
+ }
+    }
+}
+$rpused = 0;
+if (!empty($orderDetails)) {
+    foreach ($orderDetails as $row) {
+         if ($row['referalpoint'] > 0) 
+           $rpused += $row['referalpoint'];
+        
+    }
+} 
+
+ ?>
+                                   
+
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -48,63 +73,18 @@
 
 
                     <li class="nav-item" role="presentation">
-                        <a style="border:1px blue solid; margin:1px;" class="nav-link active" id="pills-profile-tab" data-bs-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Your profile</a>
+                        <a style="border:1px #336799 solid; margin: 1px 8px; height: 40px;" class="nav-link active my_btn" id="pills-profile-tab" data-bs-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Your profile</a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a style="border:1px blue solid; margin:1px;" class="nav-link  " id="pills-history-tab" data-bs-toggle="pill" href="#pills-history" role="tab" aria-controls="pills-history" aria-selected="true">Wallet History</a>
+                        <a style="border:1px #336799 solid; margin:1px;" class="nav-link  my_btn" id="pills-history-tab" data-bs-toggle="pill" href="#pills-history" role="tab" aria-controls="pills-history" aria-selected="true">Wallet History</a>
                     </li>
-                    <!--<li class="nav-item" role="presentation">-->
-                    <!--    <a style="border:1px blue solid; margin:1px;" class="nav-link  " id="pills-point-tab" data-bs-toggle="pill" href="#pills-point" role="tab" aria-controls="pills-point" aria-selected="true">Earned Affiliate Points</a>-->
-                    <!--</li>-->
-                    <!--<li class="nav-item" role="presentation">-->
-                    <!--    <a style="border:1px blue solid; margin:1px;" class="nav-link  " id="pills-used-tab" data-bs-toggle="pill" href="#pills-used" role="tab" aria-controls="pills-used" aria-selected="false">Used Affiliates Point</a>-->
-                    <!--</li>-->
+
 
                 </ul>
 
                 <div class="tab-content p-3 shadow m-2" id="pills-tabContent ">
-                    <div class="tab-pane fade" id="pills-point" role="tabpanel" aria-labelledby="pills-point-tab">
-                        <div class="bottom-description ">
-                            <h3>Your Affiliate Points</h3>
-                            <div class="row mt-3 p-2" style="border-top: 2px solid grey;">
-                                <div class="col-md-12 ">
-
-                                    <table class="table">
-                                        <tr>
-                                            <td>Date</td>
-                                            <td>Product</td>
-                                            <td>Affiliate Point Earned</td>
-                                        </tr>
-                                        <?php
-                                        $rp = 0;
-                                        if (!empty($pointDetails)) {
-                                            foreach ($pointDetails as $row) {
-                                                // $checkout = getRowById('checkout', 'id', $row['pur_id']);
-                                                $product = getRowById('products', 'product_id', $row['product_id']);
-                                        ?>
-
-                                                <tr>
-                                                    <td><?= convertDatedmy($row['create_date']); ?></td>
-                                                    <td><?= $product[0]['pro_name'] ?></td>
-                                                    <td><?= $row['ref_amt'] ?></td>
-                                                </tr>
-                                        <?php
-                                                $rp += $row['ref_amt'];
-                                            }
-                                        } else {
-                                            echo ' <tr>
-                                <td colspan="3">No Order History Found </td>
-                                
-                            </tr>';
-                                        }
-                                        ?>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="tab-pane fade  show active" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                    
+                     <div class="tab-pane fade  show active" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
                         <div class="bottom-description">
                             <form action="" method="POST" enctype="multipart/form-data">
                                 <h4>Your Profile</h4>
@@ -125,7 +105,8 @@
                                         <input type="number" class="form-control profileelement" name="contact" placeholder="Your Contact:" value="<?php echo $profiledata[0]['contact'] ?>" readonly>
                                     </div>
                                     <?php
-                                    if (($this->session->has_userdata('login_user_type')) == '1') {
+                                 
+                                    if ($profiledata[0]['user_type'] == '1') {
                                     ?>
                                         <div class="form-group col-md-4 ">
 
@@ -175,7 +156,7 @@
                                             <!-- <input type="file" class="form-control profileelement" name="profile" placeholder=" "  > -->
                                             <!-- <input type="hidden" name="profile_temp" value="<?= $profiledata[0]['profile'] ?>"  > -->
 
-                                            <a href="<?= (('uploads/user/' . $profiledata[0]['identitydoc']  != '') ? base_url('uploads/user/' . $profiledata[0]['profile']) : '#')  ?>" class="badge badge-success">
+                                            <a href="<?= (('uploads/user/' . $profiledata[0]['identitydoc']  != '') ? base_url('uploads/user/' . $profiledata[0]['profile']) : '#')  ?>" class="badge badge-success w-200px">
 
                                                 <?= (('uploads/user/' . $profiledata[0]['profile']  != '') ? 'View profile' : 'Profile File not found')  ?></a></p>
                                         </div>
@@ -184,13 +165,13 @@
                                             <!-- <input type="file" class="form-control profileelement" name="degreedoc" placeholder=" "  > -->
                                             <!-- <input type="hidden" name="degreedoc_temp" value="<?= $profiledata[0]['degreedoc'] ?>"  > -->
 
-                                            <a href="<?= (('uploads/user/' . $profiledata[0]['identitydoc']  != '') ?  base_url('uploads/user/' . $profiledata[0]['degreedoc']) : '#')  ?>" class="badge badge-success"><?= (('uploads/user/' . $profiledata[0]['degreedoc']  != '') ? 'View Degree Document' : 'Degree not found')  ?>
+                                            <a href="<?= (('uploads/user/' . $profiledata[0]['identitydoc']  != '') ?  base_url('uploads/user/' . $profiledata[0]['degreedoc']) : '#')  ?>" class="badge badge-success border-5px w-200px"><?= (('uploads/user/' . $profiledata[0]['degreedoc']  != '') ? 'View Degree Document' : 'Degree not found')  ?>
                                             </a></p>
                                         </div>
                                         <div class="form-group col-md-4 ">
                                             <!-- <input type="file" class="form-control profileelement" name="identitydoc" placeholder=" "  > -->
                                             <!-- <input type="hidden" name="identitydoc_temp" value="<?= $profiledata[0]['identitydoc'] ?>"  > -->
-                                            <a href="<?= (('uploads/user/' . $profiledata[0]['identitydoc']  != '') ?  base_url('uploads/user/' . $profiledata[0]['identitydoc']) : '#')  ?>" class="badge badge-success">
+                                            <a href="<?= (('uploads/user/' . $profiledata[0]['identitydoc']  != '') ?  base_url('uploads/user/' . $profiledata[0]['identitydoc']) : '#')  ?>" class="badge badge-success w-200px border-5px">
                                                 <?= (('uploads/user/' . $profiledata[0]['identitydoc']  != '') ? 'View Identity Proof ' : '  Identity Proof  not found')  ?></a></p>
                                         </div>
                                     <?php
@@ -200,67 +181,25 @@
 
                                 <div class="row mb-4">
                                     <div class="form-group col-md-12  text-right">
-                                        <button type="submit" class="btn btn-primary ediprobtn mb-5">
+                                        <button type="submit" class="btn btn-primary ediprobtn mb-5 my_btn" style="height: 40px; line-height: 1;">
                                             Update Profile
                                         </button>
                                         <!-- <a id="editprofile" data-id="0" class="badge badge-danger text-white">Edit Profile</a> -->
                                     </div>
                                     <div class="form-group col-md-12   mb-4 p-5">
                                     </div>
+
                                 </div>
                             </form>
                         </div>
                     </div>
 
-                    <div class="tab-pane fade" id="pills-used" role="tabpanel" aria-labelledby="pills-used-tab">
-                        <div class="bottom-description ">
-                            <h3>Used Affiliate Points</h3>
-                            <div class="row mt-3 p-2" style="border-top: 2px solid grey;">
-                                <div class="col-md-12 ">
-
-                                    <table class="table">
-                                        <tr>
-                                            <td>Date</td>
-                                            <td>Total amount</td>
-
-                                            <td>Affiliate Point Used</td>
-                                        </tr>
-                                        <?php
-                                        $rpused = 0;
-                                        if (!empty($orderDetails)) {
-                                            foreach ($orderDetails as $row) {
-                                                // $checkout = getRowById('checkout', 'id', $row['pur_id']);
-                                                // $product = getRowById('products', 'product_id', $row['product_id']);
-                                        ?>
-
-                                                <tr>
-                                                    <td><?= convertDatedmy($row['create_date']); ?></td>
-
-                                                    <td>Rs. <?= $row['grand_total'] ?></td>
-                                                    <td><?= $row['referalpoint'] ?> Points</td>
-                                                </tr>
-
-
-
-                                        <?php
-                                                $rpused += $row['referalpoint'];
-                                            }
-                                        } else {
-                                            echo ' <tr>
-                                <td colspan="3">No Order History Found </td>
-                                
-                            </tr>';
-                                        }
-                                        ?>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+               
 
                     <div class="tab-pane fade" id="pills-history" role="tabpanel" aria-labelledby="pills-history-tab">
                         <div class="bottom-description "><br>
                             <h3>Wallet History</h3>
+                            <p class="text-danger">After the product is delivered, your referral points will be added to your account</p>
                             <div class="row mt-3 p-2" style="border-top: 2px solid grey;">
                                 <div class="col-md-12 ">
                                     <?php
@@ -288,7 +227,8 @@
                                         <span class="badge badge-warning" id="withdraw">Withdraw Wallet point</span>
                                     <?php
                                     } else {
-                                        echo '<span class="badge badge-primary" >Minimum limit to withdraw money is ' . $walletminimum[0]['minimum_point'] . '</span>';
+                                        echo '<span style="    font-size: 12px;
+    color: red;">Minimum limit to withdraw money is ' . $walletminimum[0]['minimum_point'] . '</span>';
                                     }
 
                                     ?>
@@ -297,36 +237,75 @@
                                             <div class="col-md-12 mb-3 shadow p-3" style="width: 200px;"> <label>Points to withdraw</label>
                                                 <input name="points" id="pointswithdraw" value="<?= $remain ?>" class="form-control mb-3" />
                                                 <input name="upiid" id="upiid" class="form-control mb-3" placeholder="UPI ID" />
-                                                <span class="btn btn-primary" id="withdrawrequest"> Request now </span>
+                                                <button type="button" class="btn btn-primary" id="withdrawrequest"> Request now </button>
                                                 </ </div>
                                             </div>
                                     </form>
                                 </div>
                             </div>
                             <br>
+                            
                             <div class="bottom-description "><br>
-                                <h3>Your Affiliate Points</h3>
+                                <h3>Your withdrawal Requests</h3>
                                 <div class="row mt-3 p-2" style="border-top: 2px solid grey;">
-                                    <div class="col-md-12 ">
+                                    <div class="col-md-12" style="overflow-x: scroll !important">
 
                                         <table class="table">
                                             <tr>
                                                 <td>Date</td>
-                                                <td>Product</td>
-                                                <td>Affiliate Point Earned</td>
+                                                <td>Point</td>
+                                                <td>UPI Id</td>
+                                                <td>Status</td>
+                                                <td>Approval date</td>
+                                                
                                             </tr>
                                             <?php
                                             $rp = 0;
-                                            if (!empty($pointDetails)) {
-                                                foreach ($pointDetails as $row) {
-                                                    // $checkout = getRowById('checkout', 'id', $row['pur_id']);
-                                                    $product = getRowById('products', 'product_id', $row['product_id']);
+                                            if (!empty($withdraw_request)) {
+                                                
+                                                // print_r($withdraw);
+                                                
+                                                foreach ($withdraw_request as $amt) {
+                                                  
                                             ?>
 
                                                     <tr>
-                                                        <td><?= convertDatedmy($row['create_date']); ?></td>
-                                                        <td><?= $product[0]['pro_name'] ?></td>
-                                                        <td><?= $row['ref_amt'] ?></td>
+                                                        <td><?= convertDatedmy($amt['create_date']); ?></td>
+                                                        <td><?= $amt['points'] ?></td>
+                                                        <td><?= $amt['upiid'] ?></td>
+                                                        <td>
+                                                            <?php
+                                                            if ($amt['request_status'] == '1') {
+                                                            ?>
+                                                                <span class="btn btn-success  ">Accepted</span>
+                                                            <?php
+                                                            } elseif ($amt['request_status'] == '2') {
+                                                            ?>
+                                                                <span class="btn btn-danger  ">Declined</span>
+                                                            <?php
+                                                            }
+                                                            else
+                                                            {
+                                                               echo' <span class="btn btn-warning">Pending</span>';
+                                                            }
+                                                            ?>
+                                                        </td>
+                                                        
+                                                        
+                                                        <td>
+                                                            <?php if($amt['update_date'] != '') { ?>
+                                                            <?= $amt['update_date']; ?>
+                                                            <?php }
+                                                            
+                                                            else
+                                                            {
+                                                                // echo date();
+                                                            }
+                                                            ?>
+                                                            
+                                                            
+                                                        </td>
+                                                     
                                                     </tr>
                                             <?php
                                                     $rp += $row['ref_amt'];
@@ -344,6 +323,57 @@
                             </div>
                             <br>
                             <div class="bottom-description "><br>
+                                <h3>Your Affiliate Points</h3>
+                                <div class="row mt-3 p-2" style="border-top: 2px solid grey;">
+                                    <div class="col-md-12 ">
+
+                                        <table class="table">
+                                            <tr>
+                                                <td>Date</td>
+                                                <td>Product</td>
+                                                <td>Affiliate Point Earned</td>
+                                                
+                                            </tr>
+                                            <?php
+                                          
+                                            if (!empty($pointDetails)) {
+                                                foreach ($pointDetails as $row) {
+                                                    
+                                                    $getchecks =  getRowById('checkout' , 'id' , $row['checkoutid']);
+                                                    $pdate =   date('Y-m-d', strtotime($getchecks[0]['create_date']. ' + 14 day'));
+                                                    $cudate = date('Y-m-d');
+                                                     if(($getchecks[0]['status'] == 3) && ($pdate > $cudate))
+                                                     {
+                                                    
+                                                    $product = getRowById('products', 'product_id', $row['product_id']);
+                                            ?>
+
+                                                    <tr>
+                                                        <td><?= convertDatedmy($row['create_date']); ?></td>
+                                                        <td><?= $product[0]['pro_name'] ?></td>
+                                                        <td><?= $row['ref_amt'] ?></td>
+                                                     
+                                                    </tr>
+                                            <?php
+                                               
+                                                }
+                                            } 
+                                            }
+                                            else {
+                                                echo ' <tr>
+                                <td colspan="3">No Order History Found </td>
+                                
+                            </tr>';
+                                            }
+                                            ?>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            
+                            
+                            <div class="bottom-description "><br>
                                 <h3>Used Affiliate Points</h3>
                                 <div class="row mt-3 p-2" style="border-top: 2px solid grey;">
                                     <div class="col-md-12 ">
@@ -352,28 +382,28 @@
                                             <tr>
                                                 <td>Date</td>
                                                 <td>Total amount</td>
-
                                                 <td>Affiliate Point Used</td>
+                                             
                                             </tr>
                                             <?php
-                                            $rpused = 0;
+                                            $rpusede = 0;
                                             if (!empty($orderDetails)) {
                                                 foreach ($orderDetails as $row) {
-                                                    // $checkout = getRowById('checkout', 'id', $row['pur_id']);
-                                                    // $product = getRowById('products', 'product_id', $row['product_id']);
+                                                     if ($row['referalpoint'] > 0) {
                                             ?>
 
-                                                    <tr>
-                                                        <td><?= convertDatedmy($row['create_date']); ?></td>
+                                                        <tr>
+                                                            <td><?= convertDatedmy($row['create_date']); ?></td>
 
-                                                        <td>Rs. <?= $row['grand_total'] ?></td>
-                                                        <td><?= $row['referalpoint'] ?> Points</td>
-                                                    </tr>
+                                                            <td>Rs. <?= $row['grand_total'] ?></td>
+                                                            <td><?= $row['referalpoint'] ?> Points</td>
+                                                        </tr>
 
 
 
                                             <?php
-                                                    $rpused += $row['referalpoint'];
+                                                        $rpusede += $row['referalpoint'];
+                                                    }
                                                 }
                                             } else {
                                                 echo ' <tr>

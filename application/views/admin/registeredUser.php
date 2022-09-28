@@ -6,14 +6,10 @@
 <body>
     <div class="container-scroller">
 
-        <!-- partial:partials/_navbar.html -->
         <?php $this->load->view('admin/template/header'); ?>
         <!-- partial -->
         <div class="container-fluid page-body-wrapper">
-            <!-- partial:partials/_settings-panel.html -->
-
-            <!-- partial -->
-            <!-- partial:partials/_sidebar.html -->
+           
             <?php $this->load->view('admin/template/sidebar'); ?>
             <!-- partial -->
             <div class="main-panel">
@@ -33,10 +29,10 @@
                                                 <th>S No</th>
                                                 <th>fullname</th> 
                                                  
-                                                
+                                                 <th>Affiliated Point</th>
                                                 <?php if($tag == 'unblocked'){ ?>
                                                 <th>View orders</th>
-                                                <th>Usertype</th>
+                                               
                                                 <th>Affiliate Info</th>
                                                  
                                                  <?php } ?>
@@ -51,13 +47,31 @@
                                         if (!empty($registeredUser)) {
                                             foreach ($registeredUser as $row) {
                                                 $orderCount = getNumRows('checkout',array('user_id'=>$row['reg_id']));
+                                                 $pointDetails = $this->CommonModal->getRowById('affliate_purchase', 'user_id', $row['reg_id']);
+                                                 $rp = 0;
+                                                    if (!empty($pointDetails)) {
+                                                        foreach ($pointDetails as $pp) {
+                                                    $getcheck =  getRowById('checkout' , 'id' , $pp['checkoutid']);
+                                                    $pdate =   date('Y-m-d', strtotime($getcheck[0]['create_date']. ' + 14 day'));
+                                                    $cudate = date('Y-m-d');
+                                                     if(($getcheck[0]['status'] == 3) && ($pdate > $cudate))
+                                                     {
+                                                        $rp += $pp['ref_amt'];
+                                                     }
+                                                        }
+                                                    }
+                                                
                                                 $referalCount = getNumRows('affliate_purchase',array('user_id'=>$row['reg_id']));
                                         ?>
                                                 <tbody>
                                                     <tr>
                                                         <td><?php echo $i; ?></td>
-                                                        <td><?= (($row['user_type'] == '1')? '<img src="'.base_url().'assets/img/doctor.png" style="width:25px;height:25px" />':'') ?><?php echo $row['fullname']; ?><br>Contact - <?php echo $row['contact']; ?></td>
-                                                        <td></td>
+                                                        <td><?= (($row['user_type'] == '1')? '<img src="'.base_url().'assets/img/doctor.png" style="width:25px;height:25px" />':'') ?>
+                                                      
+                                                      
+                                                        <?= $row['fullname']; ?> <br>
+                                                        Contact - <?= $row['contact']; ?></td>
+                                                        <td><?= $rp  ?></td>
                                                         <!-- <td><?php echo $row['password']; ?></td> -->
                                                          <?php if($tag == 'unblocked'){ ?>
                                                         <td>

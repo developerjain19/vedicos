@@ -126,7 +126,7 @@
                                 </span>
 
                                 <span class="ec-register-wrap ec-register-btn">
-                                    <button class="btn btn-primary" type="submit" style="border-radius:30px;">Register</button>
+                                    <button class="st_btn_register" type="submit" style="padding: 4px 0; border-radius: 3px; font-weight: 400;">Register</button>
                                 </span>
                             </form>
                         </div>

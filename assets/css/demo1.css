@@ -1882,7 +1882,6 @@ progress {
 .form-control {
 	display: block;
 	width: 100%;
-	min-height: 38px;
 	padding: 6px 12px;
 	font-size: 1rem;
 	font-weight: 400;
@@ -1901,7 +1900,8 @@ progress {
 	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
 	display: block;
 	width: 100%;
-	min-height: 45px;
+	height: 30px;
+	min-height: 38px;
 	/* padding: 6px 80px 6px 20px; */
 	font-size: 14px;
 	font-weight: 400;
@@ -16999,7 +16999,7 @@ h6,
 }
 
 #ec-popnews-box input {
-	height: 45px;
+	height: 40px;
 	background-color: transparent;
 	border: 1px solid #ededed;
 	color: #444444;
@@ -17009,15 +17009,31 @@ h6,
 	width: 100%;
 	outline: none;
 	background-color: #fff;
-	border-radius: 30px;
+	border-radius: 5px;
 }
 
 #ec-popnews-box button {
-	height: 40px;
-	line-height: 42px;
-	font-size: 16px;
-	text-transform: uppercase;
-	border-radius: 30px;
+   height: 20px;
+line-height: 30px;
+font-size: 12px;
+text-transform: capitalize;
+border-radius: 30px;
+/*width: 127px;*/
+}
+
+.doctor_btn{
+    display: flex !important;
+    justify-content: center !important;
+    background: #007aff !important;
+}
+
+.new_btn{
+      height: 38px;
+    line-height: 35px;
+    font-size: 15px;
+    text-transform: capitalize;
+    border-radius: 30px;
+    width: 127px;
 }
 
 #ec-popnews-close {
@@ -19327,7 +19343,6 @@ h6,
 	-webkit-box-align: center;
 	-ms-flex-align: center;
 	align-items: center;
-	padding-bottom: 6px;
 }
 
 .ec-header-bottons .ec-header-btn:hover {
@@ -23000,8 +23015,63 @@ div#ec_news_signup {
 	margin-right: 8px;
 }
 
+.st_btn{
+        color: #ffffff !important;
+    background: #336799 !important;
+    width: 90px !important;
+    padding: 4px 0 important;
+    border-radius: 3px important;
+        font-weight: 400 !important;
+        height: 30px !important;
+        font-size: 14px !important;
+}
+
+.st_btn_register{
+    color: #ffffff !important;
+    background: #336799 !important;
+    width: 90px !important;
+    padding: 4px 0 important;
+    border-radius: 3px important;
+        font-weight: 400 !important;
+        height: 30px !important;
+        font-size: 14px !important;
+        line-height: 20px !important
+        
+}
+.st_btn_view{
+    color: #ffffff !important;
+    background: #336799 !important;
+    width: 140px !important;
+    padding: 4px 0 important;
+    border-radius: 3px important;
+        font-weight: 400 !important;
+        height: 30px !important;
+        font-size: 14px !important;
+        line-height: 20px !important
+        
+}
+
+.st_btn_resend{
+    background: #FFC108 !important;
+    width: 90px !important;
+    padding: 4px 0 important;
+    border-radius: 3px important;
+    font-weight: 400 !important;
+    height: 30px !important;
+        font-size: 14px !important;
+}
+
 .quickview-pro-content .ec-quickview-qty .ec-quickview-cart .btn .svg_img.pro_svg {
 	display: none;
 }
+
+@media(max-width: 991px){
+        .with_btn{
+    width: 100% !important;
+    font-size: 12px !important;
+}
+}
+
+
 
 /*# sourceMappingURL=demo1.css.map */

@@ -36,7 +36,7 @@
 
                     <!-- Single product content Start -->
                     <div class="single-pro-block">
-                        <div class="single-pro-inner">
+                        <div class="single-pro-inner" style="word-break: break-all !important;">
                             <div class="row">
 
                                 <img src="<?= base_url() ?><?= (($blogs[0]['b_image'] == '')? 'uploads/default.jpg':'uploads/blog/'.$blogs[0]['b_image'])  ?>" class="bimage" />
@@ -49,7 +49,7 @@
 
                     <!-- Single product content Start -->
                     <div class="single-pro-block">
-                        <div class="single-pro-inner">
+                        <div class="single-pro-inner" >
                             <h4>Other Blogs -</h4>
                             <div class="row">
                                 <?php

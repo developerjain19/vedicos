@@ -3377,6 +3377,7 @@ textarea.form-control.is-invalid {
 	user-select: none;
 	background-color: transparent;
 	border: 1px solid transparent;
+	border-radius: 5px !important; 
 	padding: 6px 12px;
 	font-size: 1rem;
 	border-radius: 4px;
@@ -16575,18 +16576,18 @@ li {
 }
 
 .btn {
-	padding: 0;
-	font-size: 14px;
-	border-radius: 0;
-	height: 45px;
-	border: 0;
-	font-weight: 500;
-	line-height: 45px;
-	-webkit-transition: all 0.3s ease 0s;
-	transition: all 0.3s ease 0s;
-	padding-left: 15px;
-	padding-right: 15px;
-	text-transform: uppercase;
+padding: 0;
+font-size: 12px;
+border-radius: 0;
+height: 30px;
+border: 0;
+font-weight: 500;
+line-height: 30px;
+-webkit-transition: all 0.3s ease 0s;
+transition: all 0.3s ease 0s;
+padding-left: 15px;
+padding-right: 15px;
+text-transform: uppercase;
 }
 
 .btn:focus {
@@ -22848,8 +22849,8 @@ select::-ms-expand {
 }
 
 .ec-sidebar-wrap .ec-sidebar-block .ec-sb-block-content li .ec-sidebar-block-item input {
-	position: absolute;
-	opacity: 0;
+	/*position: absolute;*/
+	opacity: 1;
 	cursor: pointer;
 	z-index: 999;
 	top: 0;
@@ -23233,26 +23234,26 @@ select::-ms-expand {
 }
 
 .ec-login-wrapper .ec-login-container .ec-login-form .btn {
-	cursor: pointer;
-	font-size: 20px;
-	line-height: 1;
-	padding: 0 15px;
-	text-transform: uppercase;
-	-webkit-transition: all 0.3s ease 0s;
-	transition: all 0.3s ease 0s;
-	outline: none;
-	border-radius: 0px;
-	width: 150px;
-	margin: 15px auto 0;
-	display: -webkit-box;
-	display: -ms-flexbox;
-	display: flex;
-	-webkit-box-pack: center;
-	-ms-flex-pack: center;
-	justify-content: center;
-	-webkit-box-align: center;
-	-ms-flex-align: center;
-	align-items: center;
+cursor: pointer;
+font-size: 12px;
+line-height: 1;
+padding: 0 12px;
+text-transform: uppercase;
+-webkit-transition: all 0.3s ease 0s;
+transition: all 0.3s ease 0s;
+outline: none;
+border-radius: 0px;
+width: 150px;
+margin: 15px auto 0;
+display: -webkit-box;
+display: -ms-flexbox;
+display: flex;
+-webkit-box-pack: center;
+-ms-flex-pack: center;
+justify-content: center;
+-webkit-box-align: center;
+-ms-flex-align: center;
+align-items: center;
 }
 
 /*-------------------------------------------------
@@ -24831,6 +24832,33 @@ i.ecicon.eci-star-o {
 	text-transform: capitalize;
 	line-height: 24px;
 	color: #444444;
+	padding: 8px 2px;
+	margin: 0;
+	font-size: 14px;
+	font-weight: 600;
+	position: relative;
+	-webkit-transition: all 300ms linear;
+	transition: all 300ms linear;
+	display: inline-block;
+	cursor: pointer;
+	background-color: #ffffff;
+	border-radius: 0;
+	letter-spacing: 0;
+	width: 130px;
+}
+.btnwidth
+{
+    width: 169px
+}
+
+@media (max-width : 786px)
+{
+    
+ .ec-single-pro-tab-nav .nav-tabs .nav-link {
+	border: 1px solid #eeeeee;
+	text-transform: capitalize;
+	line-height: 24px;
+	color: #444444;
 	padding: 8px 28px;
 	margin: 0;
 	font-size: 16px;
@@ -24843,6 +24871,14 @@ i.ecicon.eci-star-o {
 	background-color: #ffffff;
 	border-radius: 0;
 	letter-spacing: 0;
+	width: 115px;
+}   
+
+.btnwidth
+{
+    width: 115px
+}
+
 }
 
 .ec-single-pro-tab-nav .nav-tabs .nav-link:hover {
@@ -31710,11 +31746,20 @@ i.ecicon.eci-star-o {
 		margin: 0 2px 0 0;
 	}
 }
+.row.grid{
+	    display: grid !important;
+	    grid-template-columns: auto auto auto;
+	}
 
 @media screen and (max-width: 991px) {
 	.ec-product-ds {
 		margin: 20px 0;
 		overflow: inherit;
+	}
+	
+	.row.grid{
+	    display: grid !important;
+	    grid-template-columns: auto;
 	}
 
 	.ec-product-ds .links {
@@ -35570,6 +35615,19 @@ input[type=email]:focus::-webkit-input-placeholder {
 	color: #777;
 }
 
+.border-5px{
+    border-radius: 5px !important;
+}
+
+.my_btn{
+    width: 135px !important;
+    text-align: center !important;
+}
+
+.w-200px{
+    width: 200px !important;
+}
+
 .labels .ec-offer-coupon .ec-cpn-desc {
 	margin-bottom: 0;
 }
@@ -35721,6 +35779,26 @@ input[type=email]:focus::-webkit-input-placeholder {
 	opacity: 1;
 }
 
+button.s_btn{
+    background: #336799;
+    padding: 8px 4px !important;
+    color: #fff !important;
+    /*width: 115px !important;*/
+    font-size: 11px !important;
+    border-radius: 5px !important;
+    line-height: 0 !important;
+}
+
+.s_btn{
+   background: #336799;
+padding: 7px 10px;
+color: #fff;
+/*width: 115px;*/
+font-size: 12px !important;
+border-radius: 5px !important;
+line-height: 1 !important;
+}
+
 .labels .ec-line-offer .ec-line-offer-info {
 	width: 100%;
 	height: 65vh;
@@ -35773,6 +35851,12 @@ input[type=email]:focus::-webkit-input-placeholder {
 .labels .ec-line-offer .ec-line-offer-info .offer-btn .btn-shop-now:hover {
 	border: 1px solid #777;
 }
+
+.strike
+{
+	text-decoration: line-through;
+}
+
 
 .hmbanner{
 	height: 430px;

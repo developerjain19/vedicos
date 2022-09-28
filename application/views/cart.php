@@ -48,6 +48,6 @@
      </div>
      <div class="cart_btn">
          <!-- <a href="#" class="btn btn-primary">View Cart</a> -->
-         <a href="<?= base_url('index/cart_checkout') ?>" class="btn btn-secondary">Checkout</a>
+         <a href="<?= base_url('index/cart_checkout') ?>" class="st_btn_register" style="border-radius: 3px; padding: 6px 0; text-align: center;">Checkout</a>
      </div>
  </div>

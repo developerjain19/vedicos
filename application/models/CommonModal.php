@@ -292,4 +292,13 @@ class CommonModal extends CI_Model
 			return false;
 		}
 	}
+	public function runQuery($query)
+	{
+		$query = $this->db->query($query);
+		if ($query->num_rows() > 0) {
+			return $query->result_array();
+		} else {
+			return false;
+		}
+	}
 }

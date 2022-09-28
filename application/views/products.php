@@ -47,16 +47,9 @@
 
                                 <a class="wishlist" href="#" data-id="<?= $row['product_id'] ?>">
                                     <?php
-                                    // $wish = getSingleRowById('products_wishlist', array('product_id' => $row['product_id'], 'user_id' => $this->session->has_userdata('login_user_id')));
-                                    // if (!empty($wish)) { 
-                                    //     if (count($wish) > 0) {
-                                    //         echo " <i class='bx bx-heart-fill'></i>";
-                                    //     } else {
-                                    //         echo " <i class='bx bx-heart'></i>";
-                                    //     }
-                                    // } else {
+                                    
                                     echo " <i class='bx bx-heart'></i>";
-                                    // }
+                                    
                                     ?>
 
                                 </a>
@@ -84,7 +77,7 @@
                     </div>
                 <?php } ?>
                 <div class="text-center">
-                    <a class="common-btn" href="#">
+                    <a class="st_btn_view" style="border-radius: 3px; padding: 4px 0;" href="#">
                         Load More Products
                         <img src="assets/images/shape1.png" alt="Shape">
                         <img src="assets/images/shape2.png" alt="Shape">

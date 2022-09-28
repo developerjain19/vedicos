@@ -320,23 +320,23 @@
                                     <span class="ec-login-wrap">
                                         <b>Enter Contact No. </b>
                                         <p id="otploginmsg" class="text-danger"></p>
-                                        <input type="text" class="form-control" id="logincontact" required name="contact" placeholder="Enter Phone Number:" maxlength="10">
+                                        <input type="tel" class="form-control" id="logincontact" required name="contact" placeholder="Enter Phone Number:" maxlength="10" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
                                     </span>
                                     <span class="ec-login-wrap " id="otpf" style="display:none">
                                         <!-- <label>OTP*</label> -->
-                                        <input type="text" class="form-control" name="otp" id="userotp" required placeholder="Enter OTP">
+                                        <input type="tel" class="form-control" name="otp" id="userotp" required placeholder="Enter OTP">
                                     </span>
 
                                     <span class="ec-login-wrap ec-login-btn text-center ">
-                                        <button class="btn btn-primary" type="button" id="submitlogin" style="display: none;">Login</button>
-                                        <a class="btn btn-primary" type="button" id="getotp" style="border-radius:40px;color:white;">Get otp</a>
+                                        <button class="btn st_btn_register" type="button" id="submitlogin" style="display: none; padding: 4px 0; border-radius: 4px;">Login</button>
+                                        <a class="st_btn" type="button" id="getotp" style="padding: 4px 0; border-radius: 4px">Get otp</a>
                                         <br />
                                         <hr><br />
                                         <!-- <a class="nav-link" data-bs-toggle="tab" data-bs-target="#ec-spt-nav-info" role="tablist">Have no Login ? Register Now</a> -->
                                     </span>
                                     <!-- </form> -->
                                     <span class="ec-login-wrap ec-login-fp">
-                                        <label><span id="loginresend" class="loginresendbtn badge badge-warning" style="display:none">Resend OTP</span>
+                                        <label><span id="loginresend" class="loginresendbtn badge badge-warning btnwidth st_btn_resend" style="display: none; padding: 4px 0; border-radius: 4px; line-height: 22px;">Resend OTP</span>
                                             <span id="loginresendmsg"></span></label>
                                     </span>
                                 </div>
@@ -367,7 +367,7 @@
                                         <!-- </span>
                                         <span class="ec-register-wrap ">
                                             <label>Phone Number*</label> -->
-                                        <input type="number" class="form-control" name="contact" placeholder="Your Contact:" required maxlength="10" pattern="\d*">
+                                        <input type="tel" class="form-control" name="contact" placeholder="Your Contact:" required maxlength="10" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
                                         <!-- </span> -->
                                         <!-- <span class="ec-register-wrap d-none">
                                             <label>Password*</label>
@@ -379,7 +379,7 @@
                                             <input type="hidden" class="form-control" name="my_ref_code" id="my_ref_code" required>
                                         </span> -->
                                         <span class="ec-register-wrap ec-register-btn">
-                                            <button class="btn btn-primary" type="submit">Register</button>
+                                            <button class="st_btn_register" type="submit" style="padding: 4px 0; border-radius: 3px; font-weight: 400;">Register</button>
                                         </span>
                                     </form>
                                     <div style="width: 100%; height: 20px; border-bottom: 1px solid black; text-align: center;margin-bottom:20px;">
@@ -387,7 +387,7 @@
                                             OR
                                         </span>
                                     </div>
-                                    <a href="<?= base_url('Index/register_as_doctor') ?>" class="badge badge-primary fs-6 w-100 p-0 pt-1 pb-1" style="color: white;">
+                                    <a href="<?= base_url('Index/register_as_doctor') ?>" class="s_btn doctor_btn" style="color: white; border-radius: 5px; line-height: 36px">
                                         <!--<img src="<?= base_url(); ?>assets/img/steth.png" style="width:30px; " alt=""> -->
                                         Join as Doctors
                                     </a><br><br>

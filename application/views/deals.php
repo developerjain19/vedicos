@@ -29,27 +29,27 @@
         </div>
     </div>
     <!-- Ec breadcrumb end -->
-    <section class="ec-card-blog section-space-p">
+    <section class="section ec-category-section ec-category-wrapper-1 section-space-p ec-test-section " style="background-image: url('<?= base_url() ?>assets/img/blue.png');background-size:auto 100%">
         <div class="container">
-            <!-- <div class="row">
-				<div class="col-md-12 text-center">
-					<div class="section-title">
-						<h2 class="ec-bg-title">Style 1</h2>
-						<h2 class="ec-title">Style 1</h2>
-						<p class="sub-title">Browse The Collection of Top Categories</p>
-					</div>
-				</div>
-			</div> -->
+            <div class="row">
+                <div class="col-12 text-center">
+                    <div class="section-title">
+                        <h2 class="ec-bg-title">Our deals and combo offer</h2>
+                        <h2 class="ec-title">Our deals and combo offer</h2>
+                        <p class="sub-title  ">Browse our deals and combo offer</p>
+                    </div>
+                </div>
+            </div>
             <div class="row margin-minus-t-15">
                 <?php
                 $i = 1;
                 if (!empty($promocode)) {
                     foreach ($promocode as $row) {
                 ?>
-                        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                        <div class="col-md-4 col-6">
                             <a href="<?= base_url('index'); ?>/promocode_details/<?php echo $row['pid']; ?>">
                             <div class="ec-card-grid-space">
-                                <div class="ec-card media-1"  >
+                                <div class="ec-card" style="background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(<?= base_url() ?>uploads/promocode/<?= $row['img'] ?>); background-position: center;">
                                     <div class="ec-num"><?php echo $i; ?></div>
                                     <h1><?php echo $row['title']; ?></h1>
                                     <p><?php echo $row['description']; ?>
@@ -68,7 +68,6 @@
                     }
                 }
                 ?>
-
             </div>
         </div>
     </section>

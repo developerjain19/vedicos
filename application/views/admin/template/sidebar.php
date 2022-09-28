@@ -44,6 +44,14 @@
                 <span class="menu-title">Contact Query</span>
             </a>
         </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="<?= base_url('admin_Dashboard/freeshipping'); ?>">
+                <span class="icon-bg"><i class="mdi mdi-cube menu-icon"></i></span>
+                <span class="menu-title">Free Shipping Amount</span>
+            </a>
+        </li>
+
         <li class="nav-item">
             <a class="nav-link" href="<?= base_url('admin_Dashboard/promocode'); ?>">
                 <span class="icon-bg"><i class="mdi mdi-cube menu-icon"></i></span>

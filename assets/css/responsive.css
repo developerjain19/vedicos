@@ -317,7 +317,9 @@
 
   .ec-contact-container .ec-contact-form .btn {
     font-size: 16px;
-    width: 150px;
+    /*width: 150px;*/
+    border-radius: 0;
+    width: 169px;
     height: 44px;
     min-width: unset;
   }

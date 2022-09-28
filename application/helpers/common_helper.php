@@ -264,7 +264,7 @@ function SMSSend($phone, $msg, $template, $debug = false)
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 	// Open the URL to send the message
 	// 	$response = httpRequest($urltouse);
-	// echo $url;
+// 	echo $url;
 	$response = curl_exec($ch);
 	curl_close($ch);
 	if ($debug) {

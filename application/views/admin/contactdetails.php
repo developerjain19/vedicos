@@ -79,6 +79,12 @@
                                                             <label class="">Youtube link</label>
                                                             <input class="form-control" type="text" name="youtube" value="<?= $row['youtube'] ?>">
                                                         </div>
+                                                        
+                                                        <!-- <div class="form-group col-md-12">-->
+                                                        <!--    <label class="">Banner top Message</label>-->
+                                                        <!--    <input class="form-control" type="text" name="banner_msg" value="<?= $row['banner_msg'] ?>">-->
+                                                        <!--</div>-->
+                                                        
                                                         <span class="btn btn-light edit">Update</span>
                                                     </div>
                                                 </div>

@@ -175,11 +175,11 @@
                                             if ($row->outofstock == '0') {
                                             ?>
                                                 <div class="ec-single-cart ">
-                                                    <button class="btn btn-primary  addCart" style="background-color:#FFD814;color:black" data-id="<?= $row->product_id ?>">Add To Cart</button>
+                                                    <button class="st_btn_register addCart" style="background-color: #FFD814 !important; color: black !important; padding: 4px 0; border-radius: 3px; width: 106px !important;" data-id="<?= $row->product_id ?>">Add To Cart</button>
                                                     <span id="carttext<?= $row->product_id ?>"></span>
                                                 </div>
                                                 <div class="ec-single-cart ">
-                                                    <button class="btn btn-danger buynow"  style="background-color:#FFA41C;color:black"  data-id="<?= $row->product_id ?>"> Buy now</button>
+                                                    <button class="st_btn_register buynow" style="background-color:#FFA41C !important; color:black !important; padding: 4px 0; border-radius: 3px; margin-left: 10px;" data-id="<?= $row->product_id ?>"> Buy now</button>
 
                                                 </div>
                                             <?php
@@ -205,7 +205,7 @@
                                             <div class="row">
                                                 <div class="col-md-4">
 
-                                                    <button class="btn  btn-secondary  " style="background-color:#ff9bcf" id="afflink" data-id="<?= $row->product_id ?>" data-title="Get <?= $row->pro_name ?> with vedicos" data-userid="<?= $this->session->userdata('login_user_id') ?>">Get affiliate link</button>
+                                                    <button class="st_btn_register" style="    background-color: #ff9bcf !important; padding: 4px 0; width: 125px !important; border-radius: 3px" id="afflink" data-id="<?= $row->product_id ?>" data-title="Get <?= $row->pro_name ?> with vedicos" data-userid="<?= $this->session->userdata('login_user_id') ?>">Get affiliate link</button>
                                                 </div>
                                                 <div class="col-md-12" id="urlcmsgcopy" style="display:none">
                                                     <input type="text" id="urlmsg" readonly style="padding:10px;border:1px solid grey;" />
@@ -259,10 +259,86 @@
 
                                             ?>
                                                     <div class="ec-t-review-item shadow p-3">
+                                                        <div class="ec-t-review-avtar">
+                                                            <?php if ($rowreview['image'] != '') { ?>
 
+                                                                <img class="img-responsive" src="<?= base_url(); ?>uploads/review/<?= $rowreview['image'] ?>" alt="<?= $rowreview['name'] ?>" height="100px">
+
+                                                            <?php
+                                                            } else { ?>
+                                                                <img class="img-responsive" src="<?= base_url(); ?>uploads/products/<?= $row->img1; ?>" alt="<?= $row->pro_name; ?>" height="100px">
+
+                                                            <?php
+                                                            }
+                                                            ?>
+                                                        </div>
                                                         <div class="ec-t-review-content">
                                                             <div class="ec-t-review-top">
                                                                 <div class="ec-t-review-name"><?php echo $rowreview['name']; ?> - </div>
+                                                                <div class="ec-t-review-rating">
+                                                                    
+
+
+                                                                    <?php
+                                                                    switch ($rowreview['rating']) {
+                                                                        case "1":
+                                                                    ?>
+                                                                            <i class="ecicon eci-star fill"></i>
+                                                                            <i class="ecicon eci-star-o"></i>
+                                                                            <i class="ecicon eci-star-o "></i>
+                                                                            <i class="ecicon eci-star-o"></i>
+                                                                            <i class="ecicon eci-star-o"></i>
+                                                                        <?php
+                                                                            break;
+                                                                        case "2":
+                                                                        ?>
+                                                                            <i class="ecicon eci-star fill"></i>
+                                                                            <i class="ecicon eci-star fill"></i>
+                                                                            <i class="ecicon eci-star-o "></i>
+                                                                            <i class="ecicon eci-star-o"></i>
+                                                                            <i class="ecicon eci-star-o"></i>
+                                                                        <?php
+                                                                            break;
+                                                                        case "3":
+                                                                        ?>
+                                                                            <i class="ecicon eci-star fill"></i>
+                                                                            <i class="ecicon eci-star fill"></i>
+                                                                            <i class="ecicon eci-star fill"></i>
+                                                                            <i class="ecicon eci-star-o"></i>
+                                                                            <i class="ecicon eci-star-o"></i>
+                                                                        <?php
+                                                                            break;
+                                                                        case "4":
+                                                                        ?>
+                                                                            <i class="ecicon eci-star fill"></i>
+                                                                            <i class="ecicon eci-star fill"></i>
+                                                                            <i class="ecicon eci-star fill"></i>
+                                                                            <i class="ecicon eci-star fill"></i>
+                                                                            <i class="ecicon eci-star-o"></i> <?php
+                                                                                                                break;
+                                                                                                            case "5":
+                                                                                                                ?>
+                                                                            <i class="ecicon eci-star fill"></i>
+                                                                            <i class="ecicon eci-star fill"></i>
+                                                                            <i class="ecicon eci-star fill"></i>
+                                                                            <i class="ecicon eci-star fill"></i>
+                                                                            <i class="ecicon eci-star fill"></i> <?php
+                                                                                                                    break;
+                                                                                                                default:
+                                                                                                                    ?>
+                                                                            <i class="ecicon eci-star fill"></i>
+                                                                            <i class="ecicon eci-star fill"></i>
+                                                                            <i class="ecicon eci-star fill"></i>
+                                                                            <i class="ecicon eci-star fill"></i>
+                                                                            <i class="ecicon eci-star fill"></i> <?php
+                                                                                                            }
+                                                                                                                    ?>
+
+
+
+
+                                                                  
+                                                                </div>
 
                                                             </div>
                                                             <div class="ec-t-review-bottom">

@@ -140,6 +140,7 @@
                                                     <th>Promocode amt </th>
                                                     <th>Total</th>
                                                     <th>Shipping charges</th>
+                                                     <th>Used Referal Point</th>
                                                     <th>Grand Total </th>
 
                                                 </tr>
@@ -150,6 +151,10 @@
                                                     <td><?php echo $row['promocode_amt']; ?></td>
                                                     <td>Rs. <?php echo $row['totalamount']; ?> /-</td>
                                                     <td>Rs. <?php echo $row['shipping_charges']; ?> /-</td>
+                                                     <td> <?php if($row['referalpoint'] != '') { echo $row['referalpoint']; } else
+                                                {
+                                                echo 'No Points';
+                                                }?> </td>
                                                     <td>Rs. <?php echo $row['grand_total']; ?> /-</td>
                                                 </tr>
                                             </tbody>

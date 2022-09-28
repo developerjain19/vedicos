@@ -20,7 +20,7 @@
                 <div class="content-wrapper">
 
                     <div class="page-header">
-                        <a href="<?= base_url('admin_Dashboard/view_promocode'); ?>"><button class="btn btn-dark"><i class="fas fa-long-arrow-left"></i></button></a>
+                        <a href="<?= base_url('admin_Dashboard/promocode'); ?>"><button class="btn btn-dark"><i class="fas fa-long-arrow-left"></i></button></a>
                         <h3 class="page-title"><?= $title ?> </h3>
 
                     </div>
@@ -49,6 +49,12 @@
                                                         <label class="">Description</label>
 
                                                         <textarea class="form-control "  required="" name="description" placeholder="Short description here"></textarea>
+
+                                                    </div>
+                                                    <div class="form-group col-md-12">
+                                                        <label class="">Image</label>
+
+                                                        <input class="form-control" required="" type="file" name="img" required placeholder="200" accept="image/png, image/gif, image/jpeg">
 
                                                     </div>
                                                     <div class="form-group col-md-12">

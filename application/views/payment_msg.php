@@ -42,6 +42,9 @@
             <div class="row text-center mb-5">
                  <?php echo $message; ?>
             </div>
+            <div class="row justify-content-center p-2">
+                 <a href="<?= base_url('index'); ?>/orders" class="st_btn_view" style="border-radius: 3px; padding 4px 0; line-height: 30px !important; width: 130px !important;">Order Histroy</a>
+            </div>
         </div>
     </div>
  

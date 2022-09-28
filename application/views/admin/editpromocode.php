@@ -52,6 +52,12 @@
 
                                                     </div>
                                                     <div class="form-group col-md-12">
+                                                        <label class="">Image</label>
+
+                                                       <input class="form-control" required="" type="file" name="img">
+
+                                                    </div>
+                                                    <div class="form-group col-md-12">
                                                         <label class="">Terms of promocode</label>
 
                                                         <textarea class="form-control " id="editor1" required="" name="terms"placeholder="Brief description here"> <?= $promocode[0]['terms']; ?></textarea>

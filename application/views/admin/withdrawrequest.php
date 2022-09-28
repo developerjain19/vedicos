@@ -6,16 +6,13 @@
 <body>
     <div class="container-scroller">
 
-        <!-- partial:partials/_navbar.html -->
-        <?php $this->load->view('admin/template/header'); ?>
-        <!-- partial -->
-        <div class="container-fluid page-body-wrapper">
-            <!-- partial:partials/_settings-panel.html -->
 
-            <!-- partial -->
-            <!-- partial:partials/_sidebar.html -->
-            <?php $this->load->view('admin/template/sidebar'); ?>
-            <!-- partial -->
+
+        <?php $this->load->view('admin/template/header'); ?>
+
+        <div class="container-fluid page-body-wrapper">
+             <?php $this->load->view('admin/template/sidebar'); ?>
+
             <div class="main-panel">
                 <div class="content-wrapper">
                     <div class="page-header">
@@ -35,6 +32,7 @@
                                                 <th>User</th>
                                                 <th>Points</th>
                                                 <th>Receipt </th>
+                                                <th>UPI Id </th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -49,12 +47,11 @@
                                                     <tr>
                                                         <td><?php echo $i; ?></td>
                                                         <td><?php echo $userrow['fullname']; ?>
-                                                            <br>Contact -
-                                                            <?php echo $userrow['contact']; ?>
+                                                            <br>Contact -  <?php echo $userrow['contact']; ?>
                                                         </td>
                                                         <td><?php echo $row['points']; ?> </td>
-                                                        <td><?php echo (($row['payment'] == '')? '':'<a href="'.base_url('uploads/withdrawrequest'.$row['payment']).'">View Receipt</a>'); ?> </td>
-
+                                                        <td><?php echo (($row['payment'] == '')? '':'<a href="'.base_url('uploads/withdrawrequest/'.$row['payment']).'">View Receipt</a>'); ?> </td>
+                                                        <td><?php echo $row['upiid']; ?> </td>
                                                         <td>
                                                             <?php
                                                             if ($row['request_status'] == '0') {
@@ -69,6 +66,7 @@
                                                                                 <input type="file" name="image" class="form-control" />
                                                                                 <input type="hidden" name="id" value="<?= $row['id']; ?>" class="form-control" />
                                                                             </div>
+                                                                            
                                                                             <div class="col-md-12"><br>
                                                                                 <input type="submit" value="upload & accept" class="btn btn-primary" />
                                                                             </div>

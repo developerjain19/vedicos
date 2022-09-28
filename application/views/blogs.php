@@ -36,7 +36,7 @@
                 <div class="ec-main-heading d-none">
                     <h2>Shop <span>Detail</span></h2>
                 </div>
-                <div class="row">
+                <div class="row" style="row-gap: 30px;">
                     <?php
                     foreach ($blogs as $row) {
                     ?>

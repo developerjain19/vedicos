@@ -210,7 +210,7 @@ class admin_Dashboard extends CI_Controller
             $this->load->view('admin/instagram', $data);
         }
     }
-    
+
 
     public function disable()
     {
@@ -244,7 +244,7 @@ class admin_Dashboard extends CI_Controller
         if (count($_POST) > 0) {
 
             $post = $this->input->post();
-             $post['image']  = imageUpload('img1', 'uploads/testimonial/');
+            $post['image']  = imageUpload('img1', 'uploads/testimonial/');
             $savedata = $this->CommonModal->insertRowReturnId('testimonials', $post);
 
             if ($savedata) {
@@ -621,7 +621,7 @@ class admin_Dashboard extends CI_Controller
 
         $no = rand();
         $post = $this->input->post();
-        $post['url'] = str_replace('https://youtu.be/','',str_replace('https://www.youtube.com/watch?v=','',$this->input->post('url')));
+        $post['url'] = str_replace('https://youtu.be/', '', str_replace('https://www.youtube.com/watch?v=', '', $this->input->post('url')));
         $post['pro_name'] =  (preg_replace('/[^\p{L}\p{N}\s]/u', '', $post['pro_name']));
 
         $table = "products";
@@ -754,6 +754,12 @@ class admin_Dashboard extends CI_Controller
     public function addpromocode()
     {
         $data = $this->input->post();
+        $no = rand();
+        $folder = "./uploads/promocode/";
+        move_uploaded_file($_FILES["img"]["tmp_name"], "$folder" . $no . $_FILES["img"]["name"]);
+        $file_name = $no . $_FILES["img"]["name"];
+        $data['img'] =  $file_name;
+
         $done = $this->CommonModal->insertRow('promocode', $data);
         if ($done) {
             redirect(base_url() . 'admin_Dashboard/promocode');
@@ -771,6 +777,19 @@ class admin_Dashboard extends CI_Controller
         $data['promocode'] = $this->CommonModal->getRowById('promocode', 'pid', $id);
         if (count($_POST) > 0) {
             $data = $this->input->post();
+            $no = rand();
+            if ($_FILES["img"]["name"] == "") {
+                $this->db->select("*");
+                $this->db->where('bid', $blog_id);
+                $query = $this->db->get('blogs');
+                $result = $query->row();
+                $data['img'] = $result->b_image;
+            } else {
+                $uploadfile = $_FILES["image"]["tmp_name"];
+                $folder = "uploads/promocode/";
+                move_uploaded_file($_FILES["img"]["tmp_name"], "$folder" . $no . $_FILES["img"]["name"]);
+                $data['img']  = $no . $_FILES["img"]["name"];
+            }
             $done = $this->CommonModal->updateRowById('promocode', 'pid', $id, $data);
 
             if ($done) {
@@ -786,7 +805,7 @@ class admin_Dashboard extends CI_Controller
     public function statusupdate()
     {
         extract($this->input->post());
-        $this->CommonModal->updateRowById('checkout', 'id', $id, array('status' => $status,'update_date'=>date("Y/m/d")));
+        $this->CommonModal->updateRowById('checkout', 'id', $id, array('status' => $status, 'update_date' => date("Y/m/d")));
         redirect(base_url('admin_Dashboard/orderPlaced'));
     }
 
@@ -854,7 +873,7 @@ class admin_Dashboard extends CI_Controller
 
             $post['order_id'] = $sh->order_id;
             $post['shipment_id'] = $sh->shipment_id;
-            
+
             if ($awb_data->awb_assign_status == 1) {
                 $post['awb_code'] = $awb_data->response->data->awb_code;
                 $post['awb_assign_status'] = $awb_data->awb_assign_status;
@@ -875,14 +894,13 @@ class admin_Dashboard extends CI_Controller
                 if ($awb_data->message != '') {
                     $this->session->set_userdata('msg', '<div class="alert alert-danger">' . $awb_data->message . '</div>');
                 } else {
-                    
+
                     if ($awb_data->response->data->awb_assign_error != '') {
                         // echo $awb_data->response->data->awb_assign_error;
-                     $this->session->set_userdata('msg', '<div class="alert alert-danger">' . $awb_data->response->data->awb_assign_error . '</div>');
-                    }else{
-                      $this->session->set_userdata('msg', '<div class="alert alert-danger">AWB Not generated , kindly refer SHiprocket panel for this query.</div>');   
+                        $this->session->set_userdata('msg', '<div class="alert alert-danger">' . $awb_data->response->data->awb_assign_error . '</div>');
+                    } else {
+                        $this->session->set_userdata('msg', '<div class="alert alert-danger">AWB Not generated , kindly refer SHiprocket panel for this query.</div>');
                     }
-                   
                 }
                 // exit();
                 redirect(base_url('admin_Dashboard/shiporder/' . $id));
@@ -1059,7 +1077,7 @@ class admin_Dashboard extends CI_Controller
         $data['registeredUser'] = $this->CommonModal->getRowById($table, 'reg_id', $id);
         $data['registeredrefUser'] = $this->CommonModal->getRowById($table, 'referal_id', $rid);
         $data['referaldata'] = $this->CommonModal->getRowById('referal_amt', 'referal_id', $rid);
-        $data['orderDetails'] = $this->CommonModal->getRowById('checkout', 'user_id',  $id); 
+        $data['orderDetails'] = $this->CommonModal->getRowById('checkout', 'user_id',  $id);
         $data['pointDetails'] = $this->CommonModal->getRowById('affliate_purchase', 'user_id',  $id);
         $this->load->view('admin/referalInfo', $data);
     }
@@ -1241,7 +1259,7 @@ class admin_Dashboard extends CI_Controller
         $table = "affiliate_withdraw";
         $data['favicon'] = base_url() . 'assets/images/favicon.png';
         $data['title'] = "Affiliate withdraw";
-        $data['affiliate_withdraw'] = $this->CommonModal->getAllRows($table);
+        $data['affiliate_withdraw'] = $this->CommonModal->getAllRowsInOrder($table, 'id', 'DESC');
         $this->load->view('admin/withdrawrequest', $data);
     }
     public function declinerequest()
@@ -1253,7 +1271,7 @@ class admin_Dashboard extends CI_Controller
     {
         $id = $this->input->post('id');
         $doc = imageUpload('image', 'uploads/withdrawrequest');
-        $this->CommonModal->updateRowById('affiliate_withdraw', 'id', $id, array('request_status' => '1', 'payment' => $doc));
+        $this->CommonModal->updateRowById('affiliate_withdraw', 'id', $id, array('request_status' => '1', 'payment' => $doc, 'update_date' => date('d-m-Y')));
         redirect(base_url() . 'admin_Dashboard/withdrawrequest');
     }
     public function productreview()
@@ -1327,6 +1345,30 @@ class admin_Dashboard extends CI_Controller
 
         redirect(base_url('admin_Dashboard/orderPlaced'));
     }
+
+    public function freeshipping()
+    {
+        $data['favicon'] = base_url() . 'assets/images/favicon.png';
+        $data['title'] = 'Free Shipping';
+        $data['shipping'] = $this->CommonModal->getRowById('free_shipping', 'fid', '1');
+        if (count($_POST) > 0) {
+
+            $datav = $this->input->post();
+            $update = $this->CommonModal->updateRowByMoreId('free_shipping', array('fid' => '1'), $datav);
+            if ($update) {
+                flashData('msg', 'Data Update Successfully');
+            } else {
+                flashData('msg', 'Data Not Add');
+            }
+            redirect('admin_Dashboard/freeshipping');
+        }
+
+        $this->load->view('admin/free_shipping', $data);
+    }
+
+
+
+
     // public function returnorder($order_id)
     // {
     //     echo $order_id;

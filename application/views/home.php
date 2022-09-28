@@ -2,6 +2,8 @@
 <html lang="zxx">
 
 <?php include('includes/header.php'); ?>
+
+<!--<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css" rel="stylesheet" />-->
 <style>
     .hmwid {
         width: 60%;
@@ -90,7 +92,7 @@
                         <h2 class="ec-bg-title">Our Products</h2>
                         <h2 class="ec-title">Our Products</h2>
                         
-                        <p class="sub-title "><i>Browse The Collection of Top Products</i></p>
+                        <p class="sub-title ">Browse The Collection of Top Products</p>
                     </div>
                 </div>
                 <!--<div class="col-3 text-center">-->
@@ -174,7 +176,7 @@
             </div>
 
             <div class=" text-center w-100 mt-4">
-                <a href="<?= base_url('index'); ?>/product"><button class="btn btn-primary">Veiw all products</button></a>
+                <a href="<?= base_url('index'); ?>/product"><button class="st_btn_view" style="border-radius: 3px; padding 4px 0;">Veiw all products</button></a>
             </div>
             <br><br>
 
@@ -187,20 +189,20 @@
                     <div class="section-title">
                         <h2 class="ec-bg-title">Our deals and combo offer</h2>
                         <h2 class="ec-title">Our deals and combo offer</h2>
-                        <p class="sub-title  "><i>Browse our deals and combo offer</i></p>
+                        <p class="sub-title  ">Browse our deals and combo offer</p>
                     </div>
                 </div>
             </div>
-            <div class="row margin-minus-t-15 div-center">
+            <div class="row margin-minus-t-15">
                 <?php
                 $i = 1;
                 if (!empty($promocode)) {
                     foreach ($promocode as $row) {
                 ?>
-                        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                        <div class="col-md-4 col-6">
                             <a href="<?= base_url('index'); ?>/promocode_details/<?php echo $row['pid']; ?>">
                             <div class="ec-card-grid-space">
-                                <div class="ec-card media-1"  >
+                                <div class="ec-card" style="background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(uploads/promocode/<?= $row['img'] ?>); background-position: center;">
                                     <div class="ec-num"><?php echo $i; ?></div>
                                     <h1><?php echo $row['title']; ?></h1>
                                     <p><?php echo $row['description']; ?>
@@ -317,7 +319,7 @@
             </div>
         </div>
         <div class=" text-center w-100 mt-4">
-            <a href="<?= base_url('index'); ?>/product"><button class="btn btn-primary">Veiw all products</button></a>
+            <a href="<?= base_url('index'); ?>/product"><button class="st_btn_view" style="border-radius: 3px; padding 4px 0;">Veiw all products</button></a>
 
         </div>
     </section>
@@ -515,29 +517,7 @@
             </div>
         </div>
     </section>
-    <!-- Services Section End -->
-
-    <!-- Newsletter Modal Start -->
-    <!-- <div id="ec-popnews-bg"></div>
-    <div id="ec-popnews-box">
-        <div id="ec-popnews-close"><i class="ecicon eci-close"></i></div>
-        <div class="row">
-            <div class="col-md-6 disp-no-767">
-                <img src="<?= base_url(); ?>assets/img/vedicose.jpg" alt="newsletter">
-            </div>
-            <div class="col-md-6">
-                <div id="ec-popnews-box-content">
-                    <h2>Subscribe Newsletter</h2>
-                    <p>Subscribe the Vedicos ecommerce to get in touch and get the future update. </p>
-                    <form id="ec-popnews-form" action="#" method="post">
-                        <input type="email" name="newsemail" placeholder="Email Address" required />
-                        <button type="button" class="btn btn-primary" name="subscribe">Subscribe</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div> -->
-
+   
     <?php include('includes/footer.php'); ?>
     <?php include('includes/script.php'); ?>
 

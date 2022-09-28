@@ -10,10 +10,6 @@
         <?php $this->load->view('admin/template/header'); ?>
         <!-- partial -->
         <div class="container-fluid page-body-wrapper">
-            <!-- partial:partials/_settings-panel.html -->
-
-            <!-- partial -->
-            <!-- partial:partials/_sidebar.html -->
             <?php $this->load->view('admin/template/sidebar'); ?>
             <!-- partial -->
             <div class="main-panel">
@@ -45,6 +41,9 @@
                                             foreach ($registeredUser as $row) {
 
                                                 $referalCount = getNumRows('user_registration', array('referal_id' => 'VED' . $row['my_ref_code'] . $row['reg_id']));
+
+                                                // print_r($referalCount);
+
                                         ?>
                                                 <tbody>
                                                     <tr>

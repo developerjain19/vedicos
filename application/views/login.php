@@ -74,7 +74,7 @@
                                 </span> -->
                                 <span class="ec-login-wrap ec-login-btn text-center">
                                     <!-- <button class="btn btn-primary"  type="submit">Login</button> -->
-                                    <button class="btn btn-primary"  type="button" id="getotp">Login</button>
+                                    <button class="btn btn-primary"  type="button" id="getotp" style="width: 169px;">Login</button>
                                     <br />
                                     <hr><br />
                                     <a href="<?= base_url(); ?>index/register" class="text text-secondary">Have no Login ? Register Now</a>

@@ -39,19 +39,13 @@
 
                     <!-- Shop content Start -->
                     <div class="shop-pro-content">
-                        <div class="shop-pro-inner ">
-                            <div class="row" id="productData">
+                        <div class="sec-fw el-prod">
+                            <div class="row" id="filter_data">
                             </div>
                         </div>
-                        <div class="ec-pro-pagination">
-                             
-                            <p class="btn btn-primary" id="loadmore">
-                            Load More Products
-                             
-                            </p>
-                            <input type="hidden" value="<?= $categoryid ?>" id="catid" />
-                            <input type="hidden" value="<?= $subcategoryid ?>" id="subcatid" />
-                        </div>
+                        <input type="hidden" value="<?= $search ?>" id="search" />
+
+
                     </div>
                     <!--Shop content End -->
                 </div>
@@ -62,8 +56,7 @@
                             <h1>View Products By</h1>
                         </div>
                         <div class="ec-sidebar-wrap">
-                            <!-- Sidebar Category Block -->
-                            <div class="ec-sidebar-block">
+                              <div class="ec-sidebar-block">
 
                                 <div class="ec-sb-title">
                                     <h3 class="ec-sidebar-title">Sub Categories:</h3>
@@ -76,7 +69,7 @@
                                         ?>
                                                 <li>
                                                     <div class="ec-sidebar-block-item">
-                                                        <a href="<?= base_url('index/product/' . $categoryid . '/' . $row['sub_category_id']) ?>"> <?= $row['subcat_name']; ?><span>(<?= $count ?>)</span></a>
+                                                        <input type="checkbox" class="common_selector subcategory" value="<?php echo $row['sub_category_id']; ?>" <?= (($row['sub_category_id'] == $subcateid) ? 'Checked' : '')  ?>> <?= $row['subcat_name']; ?> <span> (<?= $count ?>)</span>
                                                     </div>
                                                 </li>
 
@@ -87,19 +80,18 @@
                                     </ul>
                                 </div>
                             </div>
-                            <!-- Sidebar Size Block -->
                             <div class="ec-sidebar-block">
                                 <div class="ec-sb-title">
                                     <h3 class="ec-sidebar-title">Category</h3>
                                 </div>
                                 <div class="ec-sb-block-content">
                                     <ul>
-                                        <?php if (!empty($category)) {
-                                            foreach ($category as $row) {
+                                        <?php if (!empty($sidecategory)) {
+                                            foreach ($sidecategory as $row) {
                                                 $count = getNumRows('products', array('category_id' => $row['category_id'])); ?>
                                                 <li>
                                                     <div class="ec-sidebar-block-item">
-                                                        <a href="<?= base_url('index/product/' . $row['category_id']) ?>"><?= $row['cat_name']; ?><span>(<?= $count ?>)</span></a>
+                                                        <input type="checkbox" class="common_selector category" value="<?php echo $row['category_id']; ?>" <?= (($row['category_id'] == $cateid) ? 'Checked' : '')  ?>> <?= $row['cat_name']; ?><span>(<?= $count ?>)</span>
                                                     </div>
                                                 </li>
                                         <?php }
@@ -108,9 +100,9 @@
                                     </ul>
                                 </div>
                             </div>
-                            
+                         
                         </div>
-                       
+
                     </div>
                 </div>
             </div>
@@ -122,3 +114,62 @@
 </body>
 
 </html>
+
+
+
+<script>
+    $(document).ready(function() {
+
+        filter_data();
+
+        function filter_data() {
+            $('#filter_data').html('<div id="loading" style="" ></div>');
+            var action = 'fetch_data';
+          
+            var search = $('#search').val();
+
+            var category = get_filter('category');
+            var subcategory = get_filter('subcategory');
+
+
+
+            $.ajax({
+                url: "<?= base_url('Index/filterData') ?>",
+                method: "POST",
+                data: {
+                    category: category,
+                    subcategory: subcategory,
+                    search: search
+                   
+
+                },
+                success: function(data) {
+                    console.log(data);
+                    $('#filter_data').html(data);
+                }
+            });
+        }
+
+        function get_filter(class_name) {
+            var filter = [];
+            $('.' + class_name + ':checked').each(function() {
+                filter.push($(this).val());
+            });
+            return filter;
+        }
+
+        $('.common_selector').click(function() {
+            filter_data();
+        });
+      
+
+        $('#get_subcategory').change(function() {
+            var get_subcategory = $('#get_subcategory').val();
+            // console.log(get_subcategory);
+            filter_data();
+        });
+
+
+
+    });
+</script>
